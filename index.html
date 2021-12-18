@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <title>CoderDocs - Bootstrap 4 Documentation Template For Software Projects</title>
+  
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="description" content="Bootstrap 4 Template For Software Startups">
+  <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+  <link rel="shortcut icon" href="favicon.ico"> 
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome JS-->
+  <script defer src="assets/fontawesome/js/all.min.js"></script>
+  
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.2/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="assets/plugins/simplelightbox/simple-lightbox.min.css">
+  <!--<link rel="stylesheet" href="assets/css/atom-one-light.min.css">-->
+  <!--<link rel="stylesheet" href="assets/css/monokai-sublime.min.css">-->
+
+  <!-- Theme CSS -->  
+  <link id="theme-style" rel="stylesheet" href="assets/css/theme.css">
+
+</head> 
+
+<body class="docs-page">    
+  <header class="header fixed-top">	    
+    <div class="branding docs-branding">
+      <div class="container-fluid position-relative py-2">
+        <div class="docs-logo-wrapper">
+					<button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible me-2 d-xl-none" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="site-logo">
+          	<a class="navbar-brand" href="index.html">
+          		<!--<img class="logo-icon me-2" src="assets/images/coderdocs-logo.svg" alt="logo">-->
+          		<span class="logo-text">kuzminki-zio</span>
+          	</a>
+          </div>    
+        </div><!--//docs-logo-wrapper-->
+        <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+					<ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+						<li class="list-inline-item">
+							<a href="https://github.com/karimagnusson/kuzminki-zio" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+						</li>
+          </ul><!--//social-list-->
+        </div><!--//docs-top-utilities-->
+      </div><!--//container-->
+    </div><!--//branding-->
+  </header><!--//header-->
+    
+    
+    <div class="docs-wrapper">
+	    <div id="docs-sidebar" class="docs-sidebar">
+		    <nav id="docs-nav" class="docs-nav navbar">
+			    <ul class="section-items list-unstyled nav flex-column pb-3">
+				    <li class="nav-item section-title"><a class="nav-link scrollto" href="#section-1"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Introduction</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-1">Installation</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-2">Example</a></li>
+				    <li class="nav-item section-title"><a class="nav-link scrollto" href="#section-2"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Connecting</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-1">Config</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-2">Layer</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-3">Custom connection</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-4">Split connection</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-3"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Model</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-1">Creating a model</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-2">Custom methods</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-3">Create model instance</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-4"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Select</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-1">Select query</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Conditions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">AND / OR</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-4">Optional conditions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">Nested query</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">Cache</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Cached and uncached WHERE conditions</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Joins</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Join</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Join types</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-6"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Insert</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-1">Basic insert</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-2">Cache insert</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-3">Insert key/value</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-4">Insert returning</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-5">Insert on conflict do nothing</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-6">Upsert</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-7">Insert where not exists</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-7">Insert from select</a></li>
+			    	<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-7"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Update</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-1">Update statement</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-2">Update returning</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-3">Cache update</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-8"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Delete</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-1">Update statement</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-2">Update returning</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-3">Cache update</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-9"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Aggregation</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-1">Count</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-2">Avg Sum Max Min</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-10"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Data types and operators</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-1">Data types</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-2">Operators</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-3">Update operators</a></li>
+			    </ul>
+		    </nav><!--//docs-nav-->
+	    </div><!--//docs-sidebar-->
+	    <div class="docs-content">
+		    <div class="container">
+			    <article class="docs-article" id="section-1">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2021-12-17</span></h1>
+					    <section class="docs-intro">
+						    <p>Kuzminki-zio is query builder and access library for PostgreSQL and ZIO written in Scala.</p>
+
+							<p>The project is currently under development and not fully tested. It currently works with ZIO 1.x.</p>
+
+							<p>
+							If you have any questions about the project feel free to post on Gitter or contact me directly on telegram @karimagnusson.</p>
+						</section><!--//docs-intro-->
+					</header>
+
+					<section class="docs-section" id="item-1-1">
+						<h2 class="section-heading">Installation</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.0"</code></pre>
+						</div>
+					</section>
+
+				  <section class="docs-section" id="item-1-2">
+						<h2 class="section-heading">Example</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">import zio._
+import zio.console._
+import zio.blocking._
+import kuzminki.api._
+
+object ExampleApp extends zio.App {
+
+  class Client extends Model("client") {
+    val id = column[Int]("id")
+    val username = column[String]("username")
+    val age = column[Int]("age")
+    def all = (id, username, age)
+  }
+
+  val client = Model.get[Client]
+
+  val job = for {
+    _ <- db.exec {
+      sql
+        .insert(client)
+        .cols2(t => (t.username, t.age))
+        .render(("Joe", 35))
+    }
+    _ <- db.exec {
+      sql
+        .update(client)
+        .setOne(_.age ==> 24)
+        .whereOne(_.id === 4)
+        .render
+    }
+    _ <- db.exec(sql.delete(client).whereOne(_.id === 7).render)
+    clients <- db.query {
+      sql
+        .select(client)
+        .cols3(_.all)
+        .whereOne(_.age > 25)
+        .limit(5)
+        .render
+    }
+    _ <- ZIO.foreach(clients) {
+      case (id, username, age) =>
+        putStrLn(s"$id $username $age")
+    }
+  } yield ()
+
+  val dbConfig = DDbConfig.forDb("company").getConfig
+  val dbLayer = Kuzminki.layer(dbConfig)
+
+  override def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] = {
+    job.provideCustomLayer(dbLayer).exitCode
+  }
+}</code></pre>
+						</div>
+					</section><!--//section-->
+				</article>
+
+				<article class="docs-article" id="section-2">
+				  <header class="docs-header">
+				    <h1 class="docs-heading">Connecting to the database</h1>
+					</header>
+					
+					<section class="docs-section" id="item-2-1">
+						<h2 class="section-heading">Config</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val dbConfig = DbConfig
+  .forDb("{DB-NAME}")
+  .withPoolSize(10) // default = 10
+  .withHost("{HOST}") // default = localhost
+  .withPort("{PORT}") // default = 5432
+  .withUser("{USER}}")
+  .withPassword("{PASSWORD}")
+  .withOptions(Map(...))
+  .getConfig</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-2-2">
+          	<h2 class="section-heading">Layer</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">object MyApp extends zio.App {
+	
+  val job = // ...
+
+  val kuzminkiLayer = Kuzminki.layer(dbConfig)
+
+  override def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] = {
+    job.provideCustomLayer(kuzminkiLayer).exitCode
+  }
+}</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-2-3">
+          	<h2 class="section-heading">Layer</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">for { 
+  db <- Kuzminki.forConfig(dbConfig)
+  users <- db.query(fetchSomeUsers)
+} yield users</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-2-4">
+          	<h2 class="section-heading">Split connection</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">// for SELECT
+val getConfig = DDbConfig.forDb("company").withPoolSize(5).getConfig
+
+// for INSERT, UPDATE, DELETE
+val setConfig = DDbConfig.forDb("company").withPoolSize(5).getConfig
+
+val dbLayer = Kuzminki.layerSplit(getConfig, setConfig)</code>
+            	</pre>
+            </div>
+
+					</section><!--//section-->
+				</article>
+
+				<article class="docs-article" id="section-3">
+				  <header class="docs-header">
+				    <h1 class="docs-heading">Model</h1>
+					</header>
+					
+					<section class="docs-section" id="item-3-1">
+						<h2 class="section-heading">Defining a model</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">import kuzminki.api._
+import java.sql.Timestamp
+
+class User extends Model("user_profile") {
+  val id = column[Int]("id")
+  val username = column[String]("username")
+  val email = column[String]("email")
+  val name = column[String]("name")
+  val age = column[Int]("age")
+  val gender = column[String]("gender")
+  val country = column[String]("country")
+  val city = column[String]("city")
+  val discount = column[Int]("discount")
+  val isActive = column[Boolean]("is_active")
+  val created = column[Timestamp]("created")
+}
+
+Model.register[User]</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-3-2">
+          	<h2 class="section-heading">Custom methods</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">class Customer extends Model("customer") {
+  val id = column[Int]("id")
+  val userId = column[Int]("user_id")
+  val spending = column[Int]("spending")
+  def all = (id, userId, spending)
+}</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-3-3">
+          	<h2 class="section-heading">Create a model instance</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">// Create an instance of the model for later use and make sure there is only one instance of the model.
+Model.register[User]
+
+// Get an existing instance of the model. If it does not exist, it is created.
+val user = Model.get[User]</code>
+            	</pre>
+            </div>
+          </section>
+			    </article>
+			    
+			    <article class="docs-article" id="section-4">
+				    <header class="docs-header">
+					    <h1 class="docs-heading">Select</h1>
+					    <section class="docs-intro">
+						    
+						</section><!--//docs-intro-->
+				    </header>
+				     <section class="docs-section" id="item-4-1">
+						<h2 class="section-heading">Select query</h2>
+						 <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">import kuzminki.api._
+
+val user = Model.get[User]
+
+for {
+  users <- db.query {
+    sql
+      .select(user)
+      .cols2(t => (
+        t.id,
+        t.username
+      ))
+      .where(t => Seq(
+        t.gender === "f",
+        t.age > 25
+      ))
+      .orderByOne(_.age.desc)
+      .limit(10)
+      .render
+  }
+} yield users // Seq[Tuple2[Int, String]]</code>
+            	</pre>
+            </div>
+
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">SELECT
+  "id",
+  "username"
+FROM "user_profile"
+WHERE "gender" = 'f'
+AND "age" > 25
+ORDER BY "age" DESC
+LIMIT 10</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-2">
+          	<h2 class="section-heading">Conditions</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">.whereOne(_.id > 100)
+
+.where(t => Seq(
+    t.gender === "f",
+    t.age > 25
+))</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-3">
+          	<h2 class="section-heading">AND / OR</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">import kuzminki.fn._
+
+.where(t => Seq(
+  t.age > 25,
+  Or(
+    t.country === "RU",
+    t.country === "FR"
+  )
+))
+// WHERE "age" > 25 AND ("country" == 'RU' OR "country" == 'FR')
+
+.whereOne(t => Or(
+  And(
+    t.country === "RU",
+    t.city === "Moscow"
+  ),
+  And(
+    t.country === "FR",
+    t.city === "Paris"
+  )
+))
+// WHERE ("country" == 'RU' AND "city" == 'Moscow') OR ("country" == 'FR' AND "city" == 'Paris')</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-4">
+          	<h2 class="section-heading">Optional conditions</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">.whereOpt(_.id > Some(100))
+
+.whereOpts(t => Seq(
+  t.gender === None,
+  t.age > Some(25)
+))
+// WHERE "age" > 25
+
+.whereOpts(t => Seq(
+  t.age > Some(25),
+  Or.opts(
+    t.country === Some("RU"),
+    t.country === Some("FR")
+  )
+))
+// WHERE "age" > 25 AND ("country" == 'RU' OR "country" == 'FR')</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-5">
+          	<h2 class="section-heading">Nested query</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val newsletter = Model.get[Newsletter]
+
+sql
+  .select(user)
+  .cols2(_.basic)
+  .whereOne(_.email.in(
+    sql
+      .select(newsletter)
+      .cols1(_.email)
+      .whereOne(_.isSubscribed === true)
+      .asSubquery
+  ))
+  .render</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">SELECT
+  "id",
+  "username"
+FROM "user_profile"
+WHERE "email" = ANY(
+  SELECT "email"
+  FROM "newsletter"
+  WHERE "is_subscribed" = true
+)</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-6">
+          	<h2 class="section-heading">Cache</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val stm = sql
+  .select(user)
+  .cols1(_.username)
+  .all
+  .orderByOne(_.age.asc)
+  .cacheWhere2(t => (
+    t.country.cacheEq,
+    t.age.cacheGt
+  ))
+
+db.query(stm.render(("CN", 25)))</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">SELECT "username"
+FROM "user_profile"
+WHERE "country" = 'CN'
+AND "age" > 25
+ORDER BY "age" ASC</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-7">
+          	<h2 class="section-heading">Cached and uncached WHERE conditions</h2>
+            <div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val stm = sql
+  .select(user)
+  .cols1(_.username)
+  .whereOne(_.age > 25)
+  .orderByOne(_.age.asc)
+  .cacheWhere1(_.country.cacheEq)
+
+db.query(stm.render("CN"))</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">SELECT "username"
+FROM "user_profile"
+WHERE "age" > 25
+AND "country" = 'CN'
+ORDER BY "age" ASC</code>
+            	</pre>
+            </div>
+          </section>
+
+        </article>
+
+        <article class="docs-article" id="section-5">
+			    <header class="docs-header">
+				    <h1 class="docs-heading">Join</h1>
+			    </header>
+			    <section class="docs-section" id="item-5-1">
+					<h2 class="section-heading">Select join</h2>
+					 <div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">sql
+  .select(user, customer)
+  .cols3(t => (
+    t.a.id,
+    t.a.username,
+    t.b.spending
+  ))
+  .joinOn(_.id, _.userId)
+  .where(t => Seq(
+    t.a.age > 25,
+    t.b.spending > 1000
+  ))
+  .orderByOne(_.b.spending.desc)
+  .limit(10)
+  .render
+  // returns Tuple3[Int, String, Int]</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">SELECT
+  "a"."id",
+  "a"."username",
+  "b"."spending"
+FROM "user_profile" "a"
+INNER JOIN "customer" "b"
+ON "a"."id" = "b"."user_id"
+WHERE "a"."age" > 25
+AND "b"."spending" > 1000
+ORDER BY "b"."spending" DESC
+LIMIT 10</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-5-2">
+					<h2 class="section-heading">Join types</h2>
+					 <div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">
+.joinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // INNER JOIN
+
+.innerJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // INNER JOIN
+
+.leftJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // LEFT JOIN
+
+.leftOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // LEFT OUTER JOIN
+ 
+ .rightJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT JOIN
+
+ .rightOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT OUTER JOIN
+
+ .fullOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // FULL OUTER JOIN
+
+ .crossJoin</code>
+            	</pre>
+            </div>
+          </section>
+
+      	</article>
+
+				<article class="docs-article" id="section-6">
+			    <header class="docs-header">
+				    <h1 class="docs-heading">Insert</h1>
+			    </header>
+			    <section class="docs-section" id="item-6-1">
+					<h2 class="section-heading">Basic insert</h2>
+					 <div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">db.exec {
+  sql
+    .insert(user)
+    .cols2(t => (
+      t.username,
+      t.email
+    ))
+    .render(("bob", "bob@mail.com"))
+}</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-2">
+					<h2 class="section-heading">Cache insert</h2>
+					 <div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">val stm = sql
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
+  .cache
+
+db.exec(
+	stm.render(("bob", "bob@mail.com"))
+)</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-3">
+					<h2 class="section-heading">Insert key/value</h2>
+					<p>If you need to insert columns that exceed the limits of a tuple, larger than 22.</p>
+					<div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">sql
+  .insert(user)
+  .data(t => Seq(
+    t.username ==> "bob",
+    t.email ==> "bob@mail.com"
+  ))
+  .render</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-4">
+					<h2 class="section-heading">Insert returning</h2>
+					<div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">val stm = sql
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
+  .returning3(t => (
+    t.id,
+    t.username,
+    t.email
+  ))
+  .render(("bob", "bob@mail.com"))
+
+db.query(stm)</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "user_profile"
+("username", "email")
+VALUES ('bob', 'bob@mail.com')
+RETURNING
+  "id",
+  "username",
+  "email"</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-5">
+					<h2 class="section-heading">Insert on conflict do nothing</h2>
+					<div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">sql
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
+  .onConflictDoNothing
+  .render(("bob", "bob@mail.com"))</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "user_profile"
+("username", "email")
+VALUES ('bob', 'bob@mail.com')
+ON CONFLICT DO NOTHING</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-6">
+					<h2 class="section-heading">Upsert</h2>
+					<div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">val stm = sql
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
+  .onConflictOnColumn(_.username)
+  .doUpdateOne(_.email)
+  .cache
+
+db.exec {
+  stm.render(("bob", "bob@hotmail.com"))
+}</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "user_profile"
+("username", "email")
+VALUES ('bob', 'bob@mail.com')
+ON CONFLICT ("username")
+DO UPDATE SET "email" = 'bob@mail.com'</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-7">
+					<h2 class="section-heading">Insert where not exists</h2>
+					<div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">val stm = sql
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
+  .whereNotExistsOne(_.username)
+  .cache
+
+db.exec {
+  stm.render(("bob", "bob@mail.com"))
+}</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "user_profile"
+("username", "email")
+SELECT 'bob', 'bob@mail.com'
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM "user_profile"
+  WHERE "username" = 'bob'
+)</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-8">
+					<h2 class="section-heading">Insert from select</h2>
+					<div class="docs-code-block">
+						<pre class="shadow-lg rounded">
+							<code class="language-scala hljs">val stm = sql
+  .insert(newsletter)
+  .cols1(_.email)
+  .fromSelect(
+    db
+      .select(user)
+      .cols1(_.email)
+      .whereOne(_.isActive === true)
+      .asSubquery
+  )
+  .render
+
+db.exec(stm)</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">INSERT INTO "newsletter" ("email")
+SELECT "email"
+FROM "user_profile"
+WHERE "is_active" = true</code>
+            	</pre>
+            </div>
+          </section>
+        </article>
+
+        <article class="docs-article" id="section-7">
+				  <header class="docs-header">
+				    <h1 class="docs-heading">Update</h1>
+					</header>
+					
+					<section class="docs-section" id="item-7-1">
+						<h2 class="section-heading">Update statement</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val stm = sql
+  .update(user)
+  .setOne(_.country ==> "JP")
+  .whereOne(_.id === 103)
+  .render
+
+db.exec(stm)</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">UPDATE "user" SET "country" = 'JP' WHERE id = 103</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-7-2">
+						<h2 class="section-heading">Update returning</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val stm = sql
+  .update(user)
+  .set(t => Seq(
+    t.country ==> "IS",
+    t.city ==> "Reykjavik"
+  ))
+  .whereOne(_.id === 31)
+  .returning4(t => (
+    t.id,
+    t.email,
+    t.country,
+    t.city
+  ))
+  .render
+
+db.queryHeadOpt(stm)</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">UPDATE "user_profile"
+SET country = 'IS',
+       city = 'Reykjavik'
+WHERE "id" = 31
+RETURNING
+  "id",
+  "email",
+  "country",
+  "city"</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-7-3">
+						<h2 class="section-heading">Cache update</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val stm = sql
+  .update(user)
+  .cacheSet2(t => (
+    t.isActive.cacheAssign,
+    t.discount.cacheIncrement
+  ))
+  .cacheWhere1(_.id.cacheEq)
+
+db.exec {
+  stm.render((true, 10), 27)
+}</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">UPDATE "user_profile"
+SET "is_active" = true,
+     "discount" = "discount" + 10
+WHERE "id" = 27</code>
+            	</pre>
+            </div>
+          </section>
+        </article>
+
+        <article class="docs-article" id="section-8">
+				  <header class="docs-header">
+				    <h1 class="docs-heading">Delete</h1>
+					</header>
+					
+					<section class="docs-section" id="item-8-1">
+						<h2 class="section-heading">Delete statement</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">sql
+  .delete(user)
+  .whereOne(_.id === 103)
+  .render</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-8-2">
+						<h2 class="section-heading">Cache delete</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val stm = sql
+  .delete(user)
+  .whereOne(_.id === 103)
+  .cache
+
+db.exec(stm)</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-8-3">
+						<h2 class="section-heading">Delete returning</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">val stm = sql
+  .delete(user)
+  .whereOne(_.id === 103)
+  .returning1(_.email)
+  .render
+
+db.queryHeadOpt(stm)</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">DELETE FROM "user_profile"
+WHERE "id" = 103
+RETURNING "email"</code>
+            	</pre>
+            </div>
+          </section>
+        </article>
+
+        <article class="docs-article" id="section-9">
+				  <header class="docs-header">
+				    <h1 class="docs-heading">Aggregation</h1>
+					</header>
+					
+					<section class="docs-section" id="item-9-1">
+						<h2 class="section-heading">Count</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">sql
+  .count(user)
+  .whereOne(_.country === "IT")
+  .render</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">SELECT count(*) FROM "user_profile" WHERE "country" = 'IT'</code>
+            	</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-9-2">
+						<h2 class="section-heading">Avg Sum Max Min</h2>
+						<div class="docs-code-block">
+							<pre class="shadow-lg rounded">
+								<code class="language-scala hljs">import kuzminki.api._
+import kuzminki.fn._
+
+sql
+  .select(user)
+  .cols3(t => (
+    Avg.int(t.age),
+    Max.int(t.age),
+    Min.int(t.age)
+  ))
+  .whereOne(_.country === "US")
+  .render</code>
+            	</pre>
+            	<p>Resulting SQL</p>
+							<pre class="shadow-lg rounded">
+								<code class="language-pgsql hljs">SELECT
+  avg("age"), 2),
+  max("age"),
+  min("age")
+FROM "user_profile"
+WHERE "country" = 'US'</code>
+            	</pre>
+            </div>
+          </section>
+        </article>
+
+        <article class="docs-article" id="section-10">
+				  <header class="docs-header">
+				    <h1 class="docs-heading">Data types and operators</h1>
+					</header>
+					
+					<section class="docs-section" id="item-10-1">
+						<h2 class="section-heading">Data types</h2>
+						<div class="table-responsive my-4">
+							<table class="table table-bordered">
+								<tbody>
+								  <tr>
+									    <th class="theme-bg-light">Postgres</th>
+									    <th>Scala</th>
+									</tr>
+									<tr>
+									      <td class="theme-bg-light">varchar / text</td>
+									      <td>String</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">bool</td>
+									    <td>Boolean</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">int2</td>
+									    <td>Short</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">int4</td>
+									    <td>Int</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">int8</td>
+									    <td>Long</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">float4</td>
+									    <td>Float</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">float8</td>
+									    <td>Double</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">numeric</td>
+									    <td>BigDecimal</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">date</td>
+									    <td>java.sql.Date</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">time</td>
+									    <td>java.sql.Date</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">timestamp</th>
+									    <td>java.sql.Timestamp</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+          </section>
+
+          <section class="docs-section" id="item-10-2">
+						<h2 class="section-heading">Operators</h2>
+						<div class="table-responsive my-4">
+							<table class="table table-bordered">
+								<tbody>
+								    <tr>
+									    <th>Operator</th>
+									    <th>Alternative</th>
+									    <th>Cache</th>
+									    <th>Type</th>
+									</tr>
+									<tr>
+									    <td>===</th>
+									    <td>matches</td>
+									    <td>cacheEq</th>
+									    <td>Any</td>
+									</tr>
+									<tr>
+									    <td>!==</th>
+									    <td>not</td>
+									    <td>cacheNot</th>
+									    <td>Any</td>
+									</tr>
+									<tr>
+									    <td>></th>
+									    <td>gt</td>
+									    <td>cacheGt</th>
+									    <td>Numbers and time</td>
+									</tr>
+									<tr>
+									    <td><</th>
+									    <td>lt</td>
+									    <td>cacheLt</th>
+									    <td>Numbers and time</td>
+									</tr>
+									<tr>
+									    <td>>=</th>
+									    <td>gte</td>
+									    <td>cacheGte</th>
+									    <td>Numbers and time</td>
+									</tr>
+									<tr>
+									    <td><</th>
+									    <td>lt</td>
+									    <td>cacheLte</th>
+									    <td>Numbers and time</td>
+									</tr>
+									<tr>
+									    <td>~</th>
+									    <td>reMatch</td>
+									    <td>cacheReMatch</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td>~*</th>
+									    <td>reIMatch</td>
+									    <td>cacheReIMatch</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td>!~</th>
+									    <td>reNotMatch</td>
+									    <td>cacheNotReMatch</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td>!~*</th>
+									    <td>reNotIMatch</td>
+									    <td>cacheNotIReMatch</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>like</td>
+									    <td>cacheLike</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>startsWith</td>
+									    <td>cacheStartsWith</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>endsWith</td>
+									    <td>cacheEndsWith</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>similarTo</td>
+									    <td>cacheSimilarTo</th>
+									    <td>String</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>isNull</td>
+									    <td></th>
+									    <td>Any</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>isNotNull</td>
+									    <td></th>
+									    <td>Any</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>in</td>
+									    <td></th>
+									    <td>Any</td>
+									</tr>
+									<tr>
+									    <td></th>
+									    <td>notIn</td>
+									    <td></th>
+									    <td>Any</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+          </section>
+
+          <section class="docs-section" id="item-10-3">
+						<h2 class="section-heading">Update operators</h2>
+						<div class="table-responsive my-4">
+							<table class="table table-bordered">
+								<tbody>
+								    <tr>
+									    <th>Update operator</th>
+									    <th>Cache operator</th>
+									</tr>
+									<tr>
+									    <td>==></th>
+									    <td>cacheAssign</td>
+									</tr>
+									<tr>
+									    <td>+=</th>
+									    <td>cacheIncrement</td>
+									</tr>
+									<tr>
+									    <td>-=</th>
+									    <td>cacheDecrement</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+          </section>
+
+			    <footer class="footer">
+				    <div class="container text-center py-5">
+				        <small class="copyright">Template Copyright &copy; <a href="https://themes.3rdwavemedia.com/" target="_blank">3rd Wave Media</a></small>
+				        <ul class="social-list list-unstyled pt-4 mb-0">
+						    	<li class="list-inline-item">
+						    		<a href="https://github.com/karimagnusson/kuzminki-zio" target="_blank">
+						    			<i class="fab fa-github fa-fw"></i>
+						    		</a>
+						    	</li> 
+				        </ul>
+				    </div>
+			    </footer>
+		    </div>
+	    </div>
+    </div>
+   
+       
+    <!-- Javascript -->          
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    
+    <!-- Page Specific JS -->
+    <script src="assets/plugins/smoothscroll.min.js"></script>
+    <script defer src="assets/js/pgsql.min.js"></script>
+    <script defer src="assets/js/sql.min.js"></script>
+   	<!--<script defer src="assets/js/highlight.min.js"></script>-->
+   	<script defer src="assets/js/scala.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script src="assets/js/highlight-custom.js"></script>
+    <script src="assets/plugins/simplelightbox/simple-lightbox.min.js"></script>      
+    <script src="assets/plugins/gumshoe/gumshoe.polyfills.min.js"></script> 
+    <script src="assets/js/docs.js"></script> 
+
+</body>
+</html> 
+
