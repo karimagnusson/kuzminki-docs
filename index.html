@@ -344,9 +344,10 @@ val user = Model.get[User]</code>
 						    
 						</section><!--//docs-intro-->
 				    </header>
-				     <section class="docs-section" id="item-4-1">
-						<h2 class="section-heading">Select query</h2>
-						 <div class="docs-code-block">
+				    <section class="docs-section" id="item-4-1">
+							<h2 class="section-heading">Select query</h2>
+							<p>You select the columns as tuple of model columns. The query will return tuple of the column types, in this case, <code>Seq[Tuple2[Int, String]]</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>.orderByOne(_.age.asc)</code>.
+						 	<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
 
@@ -368,7 +369,7 @@ for {
       .limit(10)
       .render
   }
-} yield users // Seq[Tuple2[Int, String]]</code>
+} yield users</code>
             	</pre>
             </div>
 
@@ -388,6 +389,7 @@ LIMIT 10</code>
 
           <section class="docs-section" id="item-4-2">
           	<h2 class="section-heading">Conditions</h2>
+          	<p>Refer to <a href="#item-10-2">Operators</a> for a list of operators. If you have only one condition you can use the <code>whereOne</code> method for convenience.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">.whereOne(_.id > 100)
@@ -402,6 +404,7 @@ LIMIT 10</code>
 
           <section class="docs-section" id="item-4-3">
           	<h2 class="section-heading">AND / OR</h2>
+          	<p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.fn._
@@ -432,6 +435,7 @@ LIMIT 10</code>
 
           <section class="docs-section" id="item-4-4">
           	<h2 class="section-heading">Optional conditions</h2>
+          	<p>Optional conditions for example from http GET request.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">.whereOpt(_.id > Some(100))
@@ -456,6 +460,7 @@ LIMIT 10</code>
 
           <section class="docs-section" id="item-4-5">
           	<h2 class="section-heading">Nested query</h2>
+          	<p>Nested queries are just like any other query but with <code>.asSubquery</code> instead of <code>.render</code>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val newsletter = Model.get[Newsletter]
@@ -488,6 +493,7 @@ WHERE "email" = ANY(
 
           <section class="docs-section" id="item-4-6">
           	<h2 class="section-heading">Cache</h2>
+          	<p>For increased performance you can cache your queries. The SQL string will be created only once and you get the same performance as with raw queries.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
@@ -502,7 +508,6 @@ WHERE "email" = ANY(
 
 db.query(stm.render(("CN", 25)))</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT "username"
 FROM "user_profile"
@@ -515,6 +520,7 @@ ORDER BY "age" ASC</code>
 
           <section class="docs-section" id="item-4-7">
           	<h2 class="section-heading">Cached and uncached WHERE conditions</h2>
+            <p>You can mix cached and uncached WHERE conditions.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
@@ -544,8 +550,9 @@ ORDER BY "age" ASC</code>
 				    <h1 class="docs-heading">Join</h1>
 			    </header>
 			    <section class="docs-section" id="item-5-1">
-					<h2 class="section-heading">Select join</h2>
-					 <div class="docs-code-block">
+						<h2 class="section-heading">Select join</h2>
+						<p>To do Joins you just put two model instances as arguments and the columns are accessable under <code>a</code> and <code>b</code></p>
+					 	<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">sql
   .select(user, customer)
@@ -583,6 +590,7 @@ LIMIT 10</code>
 
           <section class="docs-section" id="item-5-2">
 					<h2 class="section-heading">Join types</h2>
+					<p>The following joins are available. Refer to the <a href="#">Handle null values</a> to avoid problems that may come up with joins.
 					 <div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">
@@ -594,13 +602,13 @@ LIMIT 10</code>
 
 .leftOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // LEFT OUTER JOIN
  
- .rightJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT JOIN
+.rightJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT JOIN
 
- .rightOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT OUTER JOIN
+.rightOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT OUTER JOIN
 
- .fullOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // FULL OUTER JOIN
+.fullOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // FULL OUTER JOIN
 
- .crossJoin</code>
+.crossJoin</code>
             	</pre>
             </div>
           </section>
@@ -613,7 +621,8 @@ LIMIT 10</code>
 			    </header>
 			    <section class="docs-section" id="item-6-1">
 					<h2 class="section-heading">Basic insert</h2>
-					 <div class="docs-code-block">
+					<p>To do insert you define a tuple of columns and then pass a tuple of the column types to <code>render</code>, in this case <code>Tuple2[String, String]</code></p>
+					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">db.exec {
   sql
@@ -625,7 +634,6 @@ LIMIT 10</code>
     .render(("bob", "bob@mail.com"))
 }</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
             	</pre>
@@ -634,7 +642,8 @@ LIMIT 10</code>
 
           <section class="docs-section" id="item-6-2">
 					<h2 class="section-heading">Cache insert</h2>
-					 <div class="docs-code-block">
+					<p>In most cases it is sensible to cache insert queries.</p>
+					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
   .insert(user)
@@ -677,6 +686,7 @@ db.exec(
 
           <section class="docs-section" id="item-6-4">
 					<h2 class="section-heading">Insert returning</h2>
+					<p>The returning columns defined in the same way a SELECT columns.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
@@ -709,6 +719,7 @@ RETURNING
 
           <section class="docs-section" id="item-6-5">
 					<h2 class="section-heading">Insert on conflict do nothing</h2>
+					<p>You can take advantage of <code>ON CONFLICT DO NOTHING</code> to avoid errors on <code>UNIQUE</code> columns.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">sql
@@ -720,7 +731,6 @@ RETURNING
   .onConflictDoNothing
   .render(("bob", "bob@mail.com"))</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
@@ -732,6 +742,7 @@ ON CONFLICT DO NOTHING</code>
 
           <section class="docs-section" id="item-6-6">
 					<h2 class="section-heading">Upsert</h2>
+					<p>The updated column have to be </p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
@@ -748,7 +759,6 @@ db.exec {
   stm.render(("bob", "bob@hotmail.com"))
 }</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
