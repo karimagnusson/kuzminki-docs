@@ -101,9 +101,10 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Conditions</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">AND / OR</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-4">Optional conditions</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">Nested query</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">Cache</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Cached and uncached WHERE conditions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">Null values</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">Nested query</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Cache</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-8">Cached and uncached WHERE conditions</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Joins</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Join</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Join types</a></li>
@@ -470,8 +471,28 @@ LIMIT 10</code>
           </section>
 
           <section class="docs-section" id="item-4-5">
+          	<h2 class="section-heading">Null values</h2>
+          	<p>If you have null values in a column you can use one of the folloing ways to turn the result into <code>Option[T]</code></p>
+            <div class="docs-code-block">
+            	<p>Convert the column in the model from <code>T</code> to <code>Option[T]</code></p>
+            	<pre class="rounded">
+								<code class="language-scala hljs">val city = column[String]("city").asOpt</code>
+							</pre>
+							<p>Convert the column in the query from <code>T</code> to <code>Option[T]</code></p>
+							<pre class="rounded">
+								<code class="language-scala hljs">cols1(_.city.asOpt)</code>
+							</pre>
+							<p>Use Posgres's coalesce function to return a default value</p>
+							<pre class="rounded">
+								<code class="language-scala hljs">import kuzminki.fn._
+cols1(t => Fn.coalesce(t.city, "No city"))</code>
+							</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-6">
           	<h2 class="section-heading">Nested query</h2>
-          	<p>Nested queries are just like any other query but with <code>.asSubquery</code> instead of <code>.render</code>
+          	<p>Nested queries are just like any other query but with <code>asSubquery</code> instead of <code>render</code>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val newsletter = Model.get[Newsletter]
@@ -502,7 +523,7 @@ WHERE "email" = ANY(
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-6">
+          <section class="docs-section" id="item-4-7">
           	<h2 class="section-heading">Cache</h2>
           	<p>For increased performance you can cache your queries. The SQL string will be created only once and you get the same performance as with raw queries.</p>
             <div class="docs-code-block">
@@ -529,7 +550,7 @@ ORDER BY "age" ASC</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-7">
+          <section class="docs-section" id="item-4-8">
           	<h2 class="section-heading">Cached and uncached WHERE conditions</h2>
             <p>You can mix cached and uncached WHERE conditions.</p>
             <div class="docs-code-block">
@@ -599,7 +620,7 @@ LIMIT 10</code>
 
           <section class="docs-section" id="item-5-2">
 					<h2 class="section-heading">Join types</h2>
-					<p>The following joins are available. Refer to the <a href="#">Handle null values</a> to avoid problems that may come up with joins.
+					<p>The following joins are available. Refer to the section <a href="#item-4-5">Null values</a> to avoid problems that may come up with joins.
 					 <div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">
