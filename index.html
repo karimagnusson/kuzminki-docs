@@ -36,8 +36,19 @@
   	}
   	.docs-article {padding: 1rem 2rem;}
   	.docs-article .docs-section {padding-top: 1rem; padding-bottom: 0;}
+  	a {color: #6a5acd;}
+  	a:hover {color: #7b68ee;}
+  	.nav-item.active .nav-link {color: #663399;}
+		.theme-icon-holder {background: #e6e6fa; color: #663399;}
+		.docs-nav .nav-item .nav-link:before {background-color: #e6e6fa;}
+		.docs-nav .nav-item.active .nav-link {color: #663399;}
+		.docs-nav .nav-item.active .nav-link .theme-icon-holder {background: #663399; color: #dcd0ff;}
+		.docs-nav .nav-item.active .nav-link:before {background-color: #663399;}
+		.social-list li {background: #ffffff;}
+		.social-list li a {color: #6a5acd; background: #ffffff;}
+		code {background: #e6e6fa;}
+		/*.site-logo .logo-text {color: #663399;}/*
 	</style>
-
 </head> 
 
 <body class="docs-page">    
@@ -532,7 +543,6 @@ ORDER BY "age" ASC</code>
 
 db.query(stm.render("CN"))</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT "username"
 FROM "user_profile"
@@ -571,7 +581,6 @@ ORDER BY "age" ASC</code>
   .render
   // returns Tuple3[Int, String, Int]</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
   "a"."id",
@@ -657,7 +666,6 @@ db.exec(
 	stm.render(("bob", "bob@mail.com"))
 )</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
             	</pre>
@@ -677,7 +685,6 @@ db.exec(
   ))
   .render</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
             	</pre>
@@ -704,7 +711,6 @@ db.exec(
 
 db.query(stm)</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
@@ -742,7 +748,7 @@ ON CONFLICT DO NOTHING</code>
 
           <section class="docs-section" id="item-6-6">
 					<h2 class="section-heading">Upsert</h2>
-					<p>The updated column have to be </p>
+					<p>The updated column has to be one of the columns you intend to insert. Use <code>doUpdateOne</code> to update one column and <code>doUpdateOne</code> to update multible columns.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
@@ -771,6 +777,7 @@ DO UPDATE SET "email" = 'bob@mail.com'</code>
 
           <section class="docs-section" id="item-6-7">
 					<h2 class="section-heading">Insert where not exists</h2>
+					<p>If you need to avoid duplication on a column that does not have a unique constraint you can use <code>whereNotExists</code>. Also, if you are makeing multible insert statements concurrently, from a stream for example, you will run into problems using <code>onConflictDoNothing</code>. Use <code>whereNotExists</code> instead.<p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
@@ -786,7 +793,6 @@ db.exec {
   stm.render(("bob", "bob@mail.com"))
 }</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
@@ -818,7 +824,6 @@ WHERE NOT EXISTS (
 
 db.exec(stm)</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "newsletter" ("email")
 SELECT "email"
@@ -836,6 +841,8 @@ WHERE "is_active" = true</code>
 					
 					<section class="docs-section" id="item-7-1">
 						<h2 class="section-heading">Update statement</h2>
+						<p>See <a href="#item-10-3">Update operators</a></p>
+						<p></p>
 						<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
@@ -846,7 +853,6 @@ WHERE "is_active" = true</code>
 
 db.exec(stm)</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user" SET "country" = 'JP' WHERE id = 103</code>
             	</pre>
@@ -874,7 +880,6 @@ db.exec(stm)</code>
 
 db.queryHeadOpt(stm)</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user_profile"
 SET country = 'IS',
@@ -891,6 +896,7 @@ RETURNING
 
           <section class="docs-section" id="item-7-3">
 						<h2 class="section-heading">Cache update</h2>
+						<p>See <a href="#item-10-3">Update operators</a></p>
 						<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
@@ -905,7 +911,6 @@ db.exec {
   stm.render((true, 10), 27)
 }</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user_profile"
 SET "is_active" = true,
@@ -930,7 +935,6 @@ WHERE "id" = 27</code>
   .whereOne(_.id === 103)
   .render</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
             	</pre>
@@ -948,7 +952,6 @@ WHERE "id" = 27</code>
 
 db.exec(stm)</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
             	</pre>
@@ -967,7 +970,6 @@ db.exec(stm)</code>
 
 db.queryHeadOpt(stm)</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile"
 WHERE "id" = 103
@@ -991,7 +993,6 @@ RETURNING "email"</code>
   .whereOne(_.country === "IT")
   .render</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT count(*) FROM "user_profile" WHERE "country" = 'IT'</code>
             	</pre>
@@ -1015,7 +1016,6 @@ sql
   .whereOne(_.country === "US")
   .render</code>
             	</pre>
-            	<p>Resulting SQL</p>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
   avg("age"), 2),
