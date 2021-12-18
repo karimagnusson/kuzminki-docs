@@ -26,6 +26,17 @@
 
   <!-- Theme CSS -->  
   <link id="theme-style" rel="stylesheet" href="assets/css/theme.css">
+  <style>
+  	pre {margin: 0 !important; padding: 0 !important;}
+  	.docs-code-block {
+  		margin-top: 0 !important;
+  		margin-bottom: 0 !important;
+  		padding-top: 0 !important;
+  		padding-bottom: 0 !important;
+  	}
+  	.docs-article {padding: 1rem 2rem;}
+  	.docs-article .docs-section {padding-top: 1rem; padding-bottom: 0;}
+	</style>
 
 </head> 
 
@@ -118,11 +129,11 @@
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2021-12-17</span></h1>
 					    <section class="docs-intro">
-						    <p>Kuzminki-zio is query builder and access library for PostgreSQL and ZIO written in Scala.</p>
+						  	<p>Kuzminki-zio is query builder and access library for PostgreSQL and ZIO written in Scala.</p>
 
-							<p>The project is currently under development and not fully tested. It currently works with ZIO 1.x.</p>
+								<p>The project is currently under development and not fully tested. It currently works with ZIO 1.x.</p>
 
-							<p>
+								<p>
 							If you have any questions about the project feel free to post on Gitter or contact me directly on telegram @karimagnusson.</p>
 						</section><!--//docs-intro-->
 					</header>
@@ -130,14 +141,14 @@
 					<section class="docs-section" id="item-1-1">
 						<h2 class="section-heading">Installation</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.0"</code></pre>
+							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.0"</code></pre>
 						</div>
 					</section>
 
 				  <section class="docs-section" id="item-1-2">
 						<h2 class="section-heading">Example</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">import zio._
 import zio.console._
 import zio.blocking._
@@ -202,7 +213,7 @@ object ExampleApp extends zio.App {
 					<section class="docs-section" id="item-2-1">
 						<h2 class="section-heading">Config</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val dbConfig = DbConfig
   .forDb("{DB-NAME}")
   .withPoolSize(10) // default = 10
@@ -218,8 +229,9 @@ object ExampleApp extends zio.App {
 
           <section class="docs-section" id="item-2-2">
           	<h2 class="section-heading">Layer</h2>
+          	<p>Create a layer that will make the driver instance accessable under <code>Has[Kuzminki]</code></p>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">object MyApp extends zio.App {
 	
   val job = // ...
@@ -236,10 +248,11 @@ object ExampleApp extends zio.App {
 
           <section class="docs-section" id="item-2-3">
           	<h2 class="section-heading">Layer</h2>
+          	<p>Create an instance driver instance of the driver</p>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">for { 
-  db <- Kuzminki.forConfig(dbConfig)
+  db <- Kuzminki.create(dbConfig)
   users <- db.query(fetchSomeUsers)
 } yield users</code>
             	</pre>
@@ -248,13 +261,14 @@ object ExampleApp extends zio.App {
 
           <section class="docs-section" id="item-2-4">
           	<h2 class="section-heading">Split connection</h2>
+          	<p>If you wish to have two connection pools, one for SELECT and another for INSERT, UPDATE, DELETE, you can use <code>layerSplit</code>. To create an instance rather than a Layer, use <code>createSplit</code>.</p>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">// for SELECT
-val getConfig = DDbConfig.forDb("company").withPoolSize(5).getConfig
+val getConfig = DbConfig.forDb("company").withPoolSize(5).getConfig
 
 // for INSERT, UPDATE, DELETE
-val setConfig = DDbConfig.forDb("company").withPoolSize(5).getConfig
+val setConfig = DbConfig.forDb("company").withPoolSize(5).getConfig
 
 val dbLayer = Kuzminki.layerSplit(getConfig, setConfig)</code>
             	</pre>
@@ -270,8 +284,9 @@ val dbLayer = Kuzminki.layerSplit(getConfig, setConfig)</code>
 					
 					<section class="docs-section" id="item-3-1">
 						<h2 class="section-heading">Defining a model</h2>
+						<p>Column types are listed under <a href="#item-10-1">Data types</a></p>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
 import java.sql.Timestamp
 
@@ -296,8 +311,9 @@ Model.register[User]</code>
 
           <section class="docs-section" id="item-3-2">
           	<h2 class="section-heading">Custom methods</h2>
+          	<p>You can create custom methods to access columns that you regularly use.</p>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">class Customer extends Model("customer") {
   val id = column[Int]("id")
   val userId = column[Int]("user_id")
@@ -310,12 +326,11 @@ Model.register[User]</code>
 
           <section class="docs-section" id="item-3-3">
           	<h2 class="section-heading">Create a model instance</h2>
+          	<p><code>Model.register[User]</code> creates an instance of the model for later use and makes sure there is only one instance of the model. <code>Model.register[User]</code> gets an existing instance of the model. If it does not exist, it is created.</p>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
-								<code class="language-scala hljs">// Create an instance of the model for later use and make sure there is only one instance of the model.
-Model.register[User]
-
-// Get an existing instance of the model. If it does not exist, it is created.
+							<pre class="rounded">
+								<code class="language-scala hljs">Model.register[User]
+// ...
 val user = Model.get[User]</code>
             	</pre>
             </div>
@@ -332,7 +347,7 @@ val user = Model.get[User]</code>
 				     <section class="docs-section" id="item-4-1">
 						<h2 class="section-heading">Select query</h2>
 						 <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
 
 val user = Model.get[User]
@@ -358,7 +373,7 @@ for {
             </div>
 
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
   "id",
   "username"
@@ -374,7 +389,7 @@ LIMIT 10</code>
           <section class="docs-section" id="item-4-2">
           	<h2 class="section-heading">Conditions</h2>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">.whereOne(_.id > 100)
 
 .where(t => Seq(
@@ -388,7 +403,7 @@ LIMIT 10</code>
           <section class="docs-section" id="item-4-3">
           	<h2 class="section-heading">AND / OR</h2>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.fn._
 
 .where(t => Seq(
@@ -418,7 +433,7 @@ LIMIT 10</code>
           <section class="docs-section" id="item-4-4">
           	<h2 class="section-heading">Optional conditions</h2>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">.whereOpt(_.id > Some(100))
 
 .whereOpts(t => Seq(
@@ -442,7 +457,7 @@ LIMIT 10</code>
           <section class="docs-section" id="item-4-5">
           	<h2 class="section-heading">Nested query</h2>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val newsletter = Model.get[Newsletter]
 
 sql
@@ -457,8 +472,7 @@ sql
   ))
   .render</code>
             	</pre>
-            	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
   "id",
   "username"
@@ -475,7 +489,7 @@ WHERE "email" = ANY(
           <section class="docs-section" id="item-4-6">
           	<h2 class="section-heading">Cache</h2>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .select(user)
   .cols1(_.username)
@@ -489,7 +503,7 @@ WHERE "email" = ANY(
 db.query(stm.render(("CN", 25)))</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT "username"
 FROM "user_profile"
 WHERE "country" = 'CN'
@@ -502,7 +516,7 @@ ORDER BY "age" ASC</code>
           <section class="docs-section" id="item-4-7">
           	<h2 class="section-heading">Cached and uncached WHERE conditions</h2>
             <div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .select(user)
   .cols1(_.username)
@@ -513,7 +527,7 @@ ORDER BY "age" ASC</code>
 db.query(stm.render("CN"))</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT "username"
 FROM "user_profile"
 WHERE "age" > 25
@@ -532,7 +546,7 @@ ORDER BY "age" ASC</code>
 			    <section class="docs-section" id="item-5-1">
 					<h2 class="section-heading">Select join</h2>
 					 <div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">sql
   .select(user, customer)
   .cols3(t => (
@@ -551,7 +565,7 @@ ORDER BY "age" ASC</code>
   // returns Tuple3[Int, String, Int]</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
   "a"."id",
   "a"."username",
@@ -570,7 +584,7 @@ LIMIT 10</code>
           <section class="docs-section" id="item-5-2">
 					<h2 class="section-heading">Join types</h2>
 					 <div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">
 .joinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // INNER JOIN
 
@@ -600,7 +614,7 @@ LIMIT 10</code>
 			    <section class="docs-section" id="item-6-1">
 					<h2 class="section-heading">Basic insert</h2>
 					 <div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">db.exec {
   sql
     .insert(user)
@@ -612,7 +626,7 @@ LIMIT 10</code>
 }</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
             	</pre>
             </div>
@@ -621,7 +635,7 @@ LIMIT 10</code>
           <section class="docs-section" id="item-6-2">
 					<h2 class="section-heading">Cache insert</h2>
 					 <div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
   .insert(user)
   .cols2(t => (
@@ -635,7 +649,7 @@ db.exec(
 )</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
             	</pre>
             </div>
@@ -645,7 +659,7 @@ db.exec(
 					<h2 class="section-heading">Insert key/value</h2>
 					<p>If you need to insert columns that exceed the limits of a tuple, larger than 22.</p>
 					<div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">sql
   .insert(user)
   .data(t => Seq(
@@ -655,7 +669,7 @@ db.exec(
   .render</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
             	</pre>
             </div>
@@ -664,7 +678,7 @@ db.exec(
           <section class="docs-section" id="item-6-4">
 					<h2 class="section-heading">Insert returning</h2>
 					<div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
   .insert(user)
   .cols2(t => (
@@ -681,7 +695,7 @@ db.exec(
 db.query(stm)</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
 VALUES ('bob', 'bob@mail.com')
@@ -696,7 +710,7 @@ RETURNING
           <section class="docs-section" id="item-6-5">
 					<h2 class="section-heading">Insert on conflict do nothing</h2>
 					<div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">sql
   .insert(user)
   .cols2(t => (
@@ -707,7 +721,7 @@ RETURNING
   .render(("bob", "bob@mail.com"))</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
 VALUES ('bob', 'bob@mail.com')
@@ -719,7 +733,7 @@ ON CONFLICT DO NOTHING</code>
           <section class="docs-section" id="item-6-6">
 					<h2 class="section-heading">Upsert</h2>
 					<div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
   .insert(user)
   .cols2(t => (
@@ -735,7 +749,7 @@ db.exec {
 }</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
 VALUES ('bob', 'bob@mail.com')
@@ -748,7 +762,7 @@ DO UPDATE SET "email" = 'bob@mail.com'</code>
           <section class="docs-section" id="item-6-7">
 					<h2 class="section-heading">Insert where not exists</h2>
 					<div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
   .insert(user)
   .cols2(t => (
@@ -763,7 +777,7 @@ db.exec {
 }</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
 ("username", "email")
 SELECT 'bob', 'bob@mail.com'
@@ -779,7 +793,7 @@ WHERE NOT EXISTS (
           <section class="docs-section" id="item-6-8">
 					<h2 class="section-heading">Insert from select</h2>
 					<div class="docs-code-block">
-						<pre class="shadow-lg rounded">
+						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
   .insert(newsletter)
   .cols1(_.email)
@@ -795,7 +809,7 @@ WHERE NOT EXISTS (
 db.exec(stm)</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "newsletter" ("email")
 SELECT "email"
 FROM "user_profile"
@@ -813,7 +827,7 @@ WHERE "is_active" = true</code>
 					<section class="docs-section" id="item-7-1">
 						<h2 class="section-heading">Update statement</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .update(user)
   .setOne(_.country ==> "JP")
@@ -823,7 +837,7 @@ WHERE "is_active" = true</code>
 db.exec(stm)</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user" SET "country" = 'JP' WHERE id = 103</code>
             	</pre>
             </div>
@@ -832,7 +846,7 @@ db.exec(stm)</code>
           <section class="docs-section" id="item-7-2">
 						<h2 class="section-heading">Update returning</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .update(user)
   .set(t => Seq(
@@ -851,7 +865,7 @@ db.exec(stm)</code>
 db.queryHeadOpt(stm)</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user_profile"
 SET country = 'IS',
        city = 'Reykjavik'
@@ -868,7 +882,7 @@ RETURNING
           <section class="docs-section" id="item-7-3">
 						<h2 class="section-heading">Cache update</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .update(user)
   .cacheSet2(t => (
@@ -882,7 +896,7 @@ db.exec {
 }</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user_profile"
 SET "is_active" = true,
      "discount" = "discount" + 10
@@ -900,14 +914,14 @@ WHERE "id" = 27</code>
 					<section class="docs-section" id="item-8-1">
 						<h2 class="section-heading">Delete statement</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">sql
   .delete(user)
   .whereOne(_.id === 103)
   .render</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
             	</pre>
             </div>
@@ -916,7 +930,7 @@ WHERE "id" = 27</code>
           <section class="docs-section" id="item-8-2">
 						<h2 class="section-heading">Cache delete</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .delete(user)
   .whereOne(_.id === 103)
@@ -925,7 +939,7 @@ WHERE "id" = 27</code>
 db.exec(stm)</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
             	</pre>
             </div>
@@ -934,7 +948,7 @@ db.exec(stm)</code>
           <section class="docs-section" id="item-8-3">
 						<h2 class="section-heading">Delete returning</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .delete(user)
   .whereOne(_.id === 103)
@@ -944,7 +958,7 @@ db.exec(stm)</code>
 db.queryHeadOpt(stm)</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile"
 WHERE "id" = 103
 RETURNING "email"</code>
@@ -961,14 +975,14 @@ RETURNING "email"</code>
 					<section class="docs-section" id="item-9-1">
 						<h2 class="section-heading">Count</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">sql
   .count(user)
   .whereOne(_.country === "IT")
   .render</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT count(*) FROM "user_profile" WHERE "country" = 'IT'</code>
             	</pre>
             </div>
@@ -977,7 +991,7 @@ RETURNING "email"</code>
           <section class="docs-section" id="item-9-2">
 						<h2 class="section-heading">Avg Sum Max Min</h2>
 						<div class="docs-code-block">
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
 import kuzminki.fn._
 
@@ -992,7 +1006,7 @@ sql
   .render</code>
             	</pre>
             	<p>Resulting SQL</p>
-							<pre class="shadow-lg rounded">
+							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
   avg("age"), 2),
   max("age"),
