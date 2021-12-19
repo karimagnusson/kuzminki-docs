@@ -47,7 +47,7 @@
 		.social-list li {background: #ffffff;}
 		.social-list li a {color: #6a5acd; background: #ffffff;}
 		code {background: #e6e6fa;}
-		/*.site-logo .logo-text {color: #663399;}/*
+		/*.site-logo .logo-text {color: #f92672;}/*
 	</style>
 </head> 
 
@@ -128,10 +128,13 @@
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-9"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Aggregation</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-1">Count</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-2">Avg Sum Max Min</a></li>
-				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-10"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Data types and operators</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-1">Data types</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-2">Operators</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-3">Update operators</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-10"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Raw statements</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-1">Select</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-2">Operation</a></li>
+				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-11"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Data types and operators</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-11-1">Data types</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-11-2">Operators</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-11-3">Update operators</a></li>
 			    </ul>
 		    </nav><!--//docs-nav-->
 	    </div><!--//docs-sidebar-->
@@ -358,7 +361,7 @@ val user = Model.get[User]</code>
 				    </header>
 				    <section class="docs-section" id="item-4-1">
 							<h2 class="section-heading">Select query</h2>
-							<p>You select the columns as tuple of model columns. The query will return tuple of the column types, in this case, <code>Seq[Tuple2[Int, String]]</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>.orderByOne(_.age.asc)</code>.
+							<p>You select the columns as tuple of model columns. The query will return tuple of the column types, in this case, <code>Seq[Tuple2[Int, String]]</code>. If you need more than 22 columns you can use <code>colsSeq</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>orderByOne(_.age.asc)</code>.
 						 	<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
@@ -638,7 +641,8 @@ LIMIT 10</code>
 
 .fullOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // FULL OUTER JOIN
 
-.crossJoin</code>
+.crossJoin
+</code>
             	</pre>
             </div>
           </section>
@@ -1051,10 +1055,42 @@ WHERE "country" = 'US'</code>
 
         <article class="docs-article" id="section-10">
 				  <header class="docs-header">
-				    <h1 class="docs-heading">Data types and operators</h1>
+				    <h1 class="docs-heading">Raw SQL</h1>
 					</header>
 					
 					<section class="docs-section" id="item-10-1">
+						<h2 class="section-heading">Select</h2>
+						<div class="docs-code-block">
+							<pre class="rounded">
+								<code class="language-scala hljs">def rawStm(country: String, minAge: Int) =
+  rsql"""SELECT * FROM "user_profile" WHERE country = $country AND age > $minAge"""
+
+val job = for {
+  users <- db.query(rawStm("TR", 25))
+} yield users</code>
+							</pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-10-2">
+						<h2 class="section-heading">Operations</h2>
+						<div class="docs-code-block">
+							<pre class="rounded">
+								<code class="language-scala hljs">val username = "bob"
+val email = "bob@mail.com"
+
+db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($username, $email)""")</code>
+            	</pre>
+            </div>
+          </section>
+        </article>
+
+        <article class="docs-article" id="section-11">
+				  <header class="docs-header">
+				    <h1 class="docs-heading">Data types and operators</h1>
+					</header>
+					
+					<section class="docs-section" id="item-11-1">
 						<h2 class="section-heading">Data types</h2>
 						<div class="table-responsive my-4">
 							<table class="table table-bordered">
@@ -1112,7 +1148,7 @@ WHERE "country" = 'US'</code>
 						</div>
           </section>
 
-          <section class="docs-section" id="item-10-2">
+          <section class="docs-section" id="item-11-2">
 						<h2 class="section-heading">Operators</h2>
 						<div class="table-responsive my-4">
 							<table class="table table-bordered">
@@ -1236,7 +1272,7 @@ WHERE "country" = 'US'</code>
 						</div>
           </section>
 
-          <section class="docs-section" id="item-10-3">
+          <section class="docs-section" id="item-11-3">
 						<h2 class="section-heading">Update operators</h2>
 						<div class="table-responsive my-4">
 							<table class="table table-bordered">
