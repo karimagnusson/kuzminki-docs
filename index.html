@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-  <title>CoderDocs - Bootstrap 4 Documentation Template For Software Projects</title>
+  <title>Kuzminki</title>
   
   <!-- Meta -->
   <meta charset="utf-8">
@@ -87,6 +87,7 @@
 				    <li class="nav-item section-title"><a class="nav-link scrollto" href="#section-1"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Introduction</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-1">Installation</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-2">Example</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-1-3">Methods</a></li>
 				    <li class="nav-item section-title"><a class="nav-link scrollto" href="#section-2"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Connecting</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-1">Config</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-2">Layer</a></li>
@@ -98,13 +99,13 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-3">Create model instance</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-4"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Select</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-1">Select query</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Conditions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Where</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">AND / OR</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-4">Optional conditions</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">Null values</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">Nested query</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Cache</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-8">Cached and uncached WHERE conditions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-8">Cached with WHERE</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Joins</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Join</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Join types</a></li>
@@ -116,18 +117,18 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-5">Insert on conflict do nothing</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-6">Upsert</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-7">Insert where not exists</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-7">Insert from select</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-8">Insert from select</a></li>
 			    	<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-7"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Update</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-1">Update statement</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-2">Update returning</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-3">Cache update</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-8"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Delete</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-1">Update statement</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-2">Update returning</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-3">Cache update</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-1">Delete statement</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-2">Cache delete</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-8-3">Delete returning</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-9"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Aggregation</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-1">Count</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-2">Avg Sum Max Min</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-9-2">Avg Max Min</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-10"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Raw statements</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-1">Select</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-10-2">Operation</a></li>
@@ -142,7 +143,7 @@
 		    <div class="container">
 			    <article class="docs-article" id="section-1">
 				    <header class="docs-header">
-					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2021-12-17</span></h1>
+					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2021-12-20</span></h1>
 					    <section class="docs-intro">
 						  	<p>Kuzminki-zio is query builder and access library for PostgreSQL and ZIO written in Scala.</p>
 
@@ -215,10 +216,28 @@ object ExampleApp extends zio.App {
   override def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] = {
     job.provideCustomLayer(dbLayer).exitCode
   }
-}</code></pre>
+}</code>
+							</pre>
 						</div>
-					</section><!--//section-->
-				</article>
+					</section>
+
+				<section class="docs-section" id="item-1-3">
+          	<h2 class="section-heading">Methods</h2>
+            <div class="docs-code-block">
+							<pre class="rounded">
+								<code class="language-scala hljs">.query(stm) // Seq[T]
+
+.queryHead(stm) // T
+
+.queryHeadOpt(stm) // Option[T]
+
+.exec(stm) // Unit
+
+.execNum(stm) // Int</code>
+            	</pre>
+            </div>
+          </section>
+        </article>
 
 				<article class="docs-article" id="section-2">
 				  <header class="docs-header">
@@ -244,7 +263,7 @@ object ExampleApp extends zio.App {
 
           <section class="docs-section" id="item-2-2">
           	<h2 class="section-heading">Layer</h2>
-          	<p>Create a layer that will make the driver instance accessable under <code>Has[Kuzminki]</code></p>
+          	<p>Create a layer to make the driver instance accessable under <code>Has[Kuzminki]</code></p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">object MyApp extends zio.App {
@@ -262,8 +281,8 @@ object ExampleApp extends zio.App {
           </section>
 
           <section class="docs-section" id="item-2-3">
-          	<h2 class="section-heading">Layer</h2>
-          	<p>Create an instance driver instance of the driver</p>
+          	<h2 class="section-heading">Custom connection</h2>
+          	<p>Create an driver instance of the driver</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">for { 
@@ -279,10 +298,10 @@ object ExampleApp extends zio.App {
           	<p>If you wish to have two connection pools, one for SELECT and another for INSERT, UPDATE, DELETE, you can use <code>layerSplit</code>. To create an instance rather than a Layer, use <code>createSplit</code>.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">// for SELECT
+								<code class="language-scala hljs">// for .query .queryHead .queryHeadOpt
 val getConfig = DbConfig.forDb("company").withPoolSize(5).getConfig
 
-// for INSERT, UPDATE, DELETE
+// for .exec .execNum
 val setConfig = DbConfig.forDb("company").withPoolSize(5).getConfig
 
 val dbLayer = Kuzminki.layerSplit(getConfig, setConfig)</code>
@@ -298,8 +317,8 @@ val dbLayer = Kuzminki.layerSplit(getConfig, setConfig)</code>
 					</header>
 					
 					<section class="docs-section" id="item-3-1">
-						<h2 class="section-heading">Defining a model</h2>
-						<p>Column types are listed under <a href="#item-10-1">Data types</a></p>
+						<h2 class="section-heading">Creating a model</h2>
+						<p>Column types are listed under <a href="#item-11-1">Data types</a></p>
 						<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
@@ -361,7 +380,7 @@ val user = Model.get[User]</code>
 				    </header>
 				    <section class="docs-section" id="item-4-1">
 							<h2 class="section-heading">Select query</h2>
-							<p>You select the columns as tuple of model columns. The query will return tuple of the column types, in this case, <code>Seq[Tuple2[Int, String]]</code>. If you need more than 22 columns you can use <code>colsSeq</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>orderByOne(_.age.asc)</code>.
+							<p>You select the columns as tuple of model columns. The query will return tuple of the column types. In this case <code>Seq[Tuple2[Int, String]]</code>. If you need more than 22 columns you can use <code>colsSeq</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>orderByOne(_.age.asc)</code>.
 						 	<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
@@ -403,8 +422,8 @@ LIMIT 10</code>
           </section>
 
           <section class="docs-section" id="item-4-2">
-          	<h2 class="section-heading">Conditions</h2>
-          	<p>Refer to <a href="#item-10-2">Operators</a> for a list of operators. If you have only one condition you can use the <code>whereOne</code> method for convenience.</p>
+          	<h2 class="section-heading">Where</h2>
+          	<p>Refer to <a href="#item-11-2">Operators</a> for a list of operators. If you have only one condition you can use the <code>whereOne</code> method for convenience.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">.whereOne(_.id > 100)
@@ -528,7 +547,7 @@ WHERE "email" = ANY(
 
           <section class="docs-section" id="item-4-7">
           	<h2 class="section-heading">Cache</h2>
-          	<p>For increased performance you can cache your queries. The SQL string will be created only once and you get the same performance as with raw queries.</p>
+          	<p>For increased performance you can cache your queries. The SQL string will be created only once and you get the same performance as you get with raw queries.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
@@ -554,8 +573,8 @@ ORDER BY "age" ASC</code>
           </section>
 
           <section class="docs-section" id="item-4-8">
-          	<h2 class="section-heading">Cached and uncached WHERE conditions</h2>
-            <p>You can mix cached and uncached WHERE conditions.</p>
+          	<h2 class="section-heading">Cached with WHERE</h2>
+            <p>You can use normal WHERE conditions with cached queries.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
@@ -585,7 +604,7 @@ ORDER BY "age" ASC</code>
 			    </header>
 			    <section class="docs-section" id="item-5-1">
 						<h2 class="section-heading">Select join</h2>
-						<p>To do Joins you just put two model instances as arguments and the columns are accessable under <code>a</code> and <code>b</code></p>
+						<p>To do Joins you just put two model instances as arguments and the models will be accessable under <code>a</code> and <code>b</code></p>
 					 	<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">sql
@@ -626,23 +645,21 @@ LIMIT 10</code>
 					<p>The following joins are available. Refer to the section <a href="#item-4-5">Null values</a> to avoid problems that may come up with joins.
 					 <div class="docs-code-block">
 						<pre class="rounded">
-							<code class="language-scala hljs">
-.joinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // INNER JOIN
+							<code class="language-scala hljs">.joinOn(_.id, _.userId) // INNER JOIN
 
-.innerJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // INNER JOIN
+.innerJoinOn(_.id, _.userId) // INNER JOIN
 
-.leftJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // LEFT JOIN
+.leftJoinOn(_.id, _.userId) // LEFT JOIN
 
-.leftOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // LEFT OUTER JOIN
+.leftOuterJoinOn(_.id, _.userId) // LEFT OUTER JOIN
  
-.rightJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT JOIN
+.rightJoinOn(_.id, _.userId) // RIGHT JOIN
 
-.rightOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // RIGHT OUTER JOIN
+.rightOuterJoinOn(_.id, _.userId) // RIGHT OUTER JOIN
 
-.fullOuterJoinOn(pickLeft: A => ModelCol, pickRight: B => ModelCol) // FULL OUTER JOIN
+.fullOuterJoinOn(_.id, _.userId) // FULL OUTER JOIN
 
-.crossJoin
-</code>
+.crossJoin // CROSS JOIN</code>
             	</pre>
             </div>
           </section>
@@ -655,7 +672,7 @@ LIMIT 10</code>
 			    </header>
 			    <section class="docs-section" id="item-6-1">
 					<h2 class="section-heading">Basic insert</h2>
-					<p>To do insert you define a tuple of columns and then pass a tuple of the column types to <code>render</code>, in this case <code>Tuple2[String, String]</code></p>
+					<p>To insert you define a tuple of columns and then pass a tuple of the column types to <code>render</code>. In this case <code>Tuple2[String, String]</code>.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">db.exec {
@@ -675,8 +692,7 @@ LIMIT 10</code>
           </section>
 
           <section class="docs-section" id="item-6-2">
-					<h2 class="section-heading">Cache insert</h2>
-					<p>In most cases it is sensible to cache insert queries.</p>
+					<h2 class="section-heading">Cache insert queries</h2>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
@@ -687,9 +703,9 @@ LIMIT 10</code>
   ))
   .cache
 
-db.exec(
-	stm.render(("bob", "bob@mail.com"))
-)</code>
+db.exec {
+  stm.render(("bob", "bob@mail.com"))
+}</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
@@ -718,7 +734,6 @@ db.exec(
 
           <section class="docs-section" id="item-6-4">
 					<h2 class="section-heading">Insert returning</h2>
-					<p>The returning columns defined in the same way a SELECT columns.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">val stm = sql
@@ -734,7 +749,7 @@ db.exec(
   ))
   .render(("bob", "bob@mail.com"))
 
-db.query(stm)</code>
+db.queryHead(stm)</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
@@ -750,7 +765,7 @@ RETURNING
 
           <section class="docs-section" id="item-6-5">
 					<h2 class="section-heading">Insert on conflict do nothing</h2>
-					<p>You can take advantage of <code>ON CONFLICT DO NOTHING</code> to avoid errors on <code>UNIQUE</code> columns.</p>
+					<p>You can take advantage of <code>ON CONFLICT DO NOTHING</code> to avoid errors on columns with <code>UNIQUE</code> constraint.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">sql
@@ -773,10 +788,10 @@ ON CONFLICT DO NOTHING</code>
 
           <section class="docs-section" id="item-6-6">
 					<h2 class="section-heading">Upsert</h2>
-					<p>The updated column has to be one of the columns you intend to insert. Use <code>doUpdateOne</code> to update one column and <code>doUpdateOne</code> to update multible columns.</p>
+					<p>The updated column has to be one of the columns you intend to insert. Use <code>doUpdateOne</code> to update one column and <code>doUpdate</code> to update multible columns.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
-							<code class="language-scala hljs">val stm = sql
+							<code class="language-scala hljs">sql
   .insert(user)
   .cols2(t => (
     t.username,
@@ -784,11 +799,7 @@ ON CONFLICT DO NOTHING</code>
   ))
   .onConflictOnColumn(_.username)
   .doUpdateOne(_.email)
-  .cache
-
-db.exec {
-  stm.render(("bob", "bob@hotmail.com"))
-}</code>
+  .render(("bob", "bob@hotmail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
@@ -802,21 +813,17 @@ DO UPDATE SET "email" = 'bob@mail.com'</code>
 
           <section class="docs-section" id="item-6-7">
 					<h2 class="section-heading">Insert where not exists</h2>
-					<p>If you need to avoid duplication on a column that does not have a unique constraint you can use <code>whereNotExists</code>. Also, if you are makeing multible insert statements concurrently, from a stream for example, you will run into problems using <code>onConflictDoNothing</code>. Use <code>whereNotExists</code> instead.<p>
+					<p>If you need to avoid duplication on a column that does not have a unique constraint you can use <code>whereNotExists</code>. Also, if you are makeing multible insert statements concurrently, from a stream for example, you will run into problems using <code>onConflictDoNothing</code>.<p>
 					<div class="docs-code-block">
 						<pre class="rounded">
-							<code class="language-scala hljs">val stm = sql
+							<code class="language-scala hljs">sql
   .insert(user)
   .cols2(t => (
     t.username,
     t.email
   ))
   .whereNotExistsOne(_.username)
-  .cache
-
-db.exec {
-  stm.render(("bob", "bob@mail.com"))
-}</code>
+  .render(("bob", "bob@mail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
@@ -835,7 +842,7 @@ WHERE NOT EXISTS (
 					<h2 class="section-heading">Insert from select</h2>
 					<div class="docs-code-block">
 						<pre class="rounded">
-							<code class="language-scala hljs">val stm = sql
+							<code class="language-scala hljs">sql
   .insert(newsletter)
   .cols1(_.email)
   .fromSelect(
@@ -845,9 +852,7 @@ WHERE NOT EXISTS (
       .whereOne(_.isActive === true)
       .asSubquery
   )
-  .render
-
-db.exec(stm)</code>
+  .render</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "newsletter" ("email")
@@ -866,7 +871,7 @@ WHERE "is_active" = true</code>
 					
 					<section class="docs-section" id="item-7-1">
 						<h2 class="section-heading">Update statement</h2>
-						<p>See <a href="#item-10-3">Update operators</a></p>
+						<p>See <a href="#item-11-3">Update operators</a></p>
 						<p></p>
 						<div class="docs-code-block">
 							<pre class="rounded">
@@ -921,7 +926,7 @@ RETURNING
 
           <section class="docs-section" id="item-7-3">
 						<h2 class="section-heading">Cache update</h2>
-						<p>See <a href="#item-10-3">Update operators</a></p>
+						<p>See <a href="#item-11-3">Update operators</a></p>
 						<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
@@ -1013,10 +1018,12 @@ RETURNING "email"</code>
 						<h2 class="section-heading">Count</h2>
 						<div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">sql
+								<code class="language-scala hljs">val stm = sql
   .count(user)
   .whereOne(_.country === "IT")
-  .render</code>
+  .render
+
+db.queryHead(stm)</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT count(*) FROM "user_profile" WHERE "country" = 'IT'</code>
@@ -1025,7 +1032,7 @@ RETURNING "email"</code>
           </section>
 
           <section class="docs-section" id="item-9-2">
-						<h2 class="section-heading">Avg Sum Max Min</h2>
+						<h2 class="section-heading">Avg Max Min</h2>
 						<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
@@ -1043,7 +1050,7 @@ sql
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
-  avg("age"), 2),
+  avg("age"),
   max("age"),
   min("age")
 FROM "user_profile"
