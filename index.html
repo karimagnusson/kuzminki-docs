@@ -49,6 +49,16 @@
 		code {background: #e6e6fa;}
 		/*.site-logo .logo-text {color: #f92672;}/*
 	</style>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-JW532LFCYV"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-JW532LFCYV');
+	</script>
 </head> 
 
 <body class="docs-page">    
@@ -137,27 +147,26 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-11-2">Operators</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-11-3">Update operators</a></li>
 			    </ul>
-		    </nav><!--//docs-nav-->
-	    </div><!--//docs-sidebar-->
+		    </nav>
+	    </div>
 	    <div class="docs-content">
 		    <div class="container">
 			    <article class="docs-article" id="section-1">
 				    <header class="docs-header">
 					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2021-12-20</span></h1>
 					    <section class="docs-intro">
-						  	<p>Kuzminki-zio is query builder and access library for PostgreSQL and ZIO written in Scala.</p>
+						  	<p>Kuzminki-zio is query builder and access library for PostgreSQL and <a href="https://zio.dev/">ZIO</a> written in Scala.</p>
 
 								<p>The project is currently under development and not fully tested. It currently works with ZIO 1.x.</p>
 
-								<p>
-							If you have any questions about the project feel free to post on Gitter or contact me directly on telegram @karimagnusson.</p>
-						</section><!--//docs-intro-->
+								<p>Kuzminki is written for those who like SQL. </p>
+						</section>
 					</header>
 
 					<section class="docs-section" id="item-1-1">
 						<h2 class="section-heading">Installation</h2>
 						<div class="docs-code-block">
-							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.0"</code></pre>
+							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.1"</code></pre>
 						</div>
 					</section>
 
