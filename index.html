@@ -108,25 +108,28 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-3">Create model instance</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-4"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Select</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-1">Select query</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Where</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">AND / OR</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-4">Optional conditions</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">Null values</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">Nested query</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Cache</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-8">Cached with WHERE</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Row as case class</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">Row as Vector</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-4">Where</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">AND / OR</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">Optional conditions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Null values</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-8">Nested query</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-9">Cache</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-10">Cached with WHERE</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Joins</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Join</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Join types</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-6"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Insert</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-1">Basic insert</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-2">Cache insert</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-3">Insert key/value</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-4">Insert returning</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-5">Insert on conflict do nothing</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-6">Upsert</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-7">Insert where not exists</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-8">Insert from select</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-6-2">Insert case class</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-3">Cache insert</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-4">Insert key/value</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-5">Insert returning</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-6">Insert on conflict do nothing</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-7">Upsert</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-8">Insert where not exists</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-9">Insert from select</a></li>
 			    	<li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-7"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Update</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-1">Update statement</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-7-2">Update returning</a></li>
@@ -203,16 +206,16 @@ object ExampleApp extends zio.App {
     _ <- db.exec {
       sql
         .update(client)
-        .setOne(_.age ==> 24)
-        .whereOne(_.id === 4)
+        .set(_.age ==> 24)
+        .where(_.id === 4)
         .render
     }
-    _ <- db.exec(sql.delete(client).whereOne(_.id === 7).render)
+    _ <- db.exec(sql.delete(client).where(_.id === 7).render)
     clients <- db.query {
       sql
         .select(client)
         .cols3(_.all)
-        .whereOne(_.age > 25)
+        .where(_.age > 25)
         .limit(5)
         .render
     }
@@ -392,7 +395,7 @@ val user = Model.get[User]</code>
 				    </header>
 				    <section class="docs-section" id="item-4-1">
 							<h2 class="section-heading">Select query</h2>
-							<p>You select the columns as tuple of model columns. The query will return tuple of the column types. In this case <code>Seq[Tuple2[Int, String]]</code>. If you need more than 22 columns you can use <code>colsSeq</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>orderByOne(_.age.asc)</code>.
+							<p>You select the columns as tuple of model columns. The query will return tuple of the column types. In this case <code>Seq[Tuple2[Int, String]]</code>. If you need more than 22 columns you can use <code>colsSeq</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>orderBy(_.age.asc)</code>.
 						 	<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
@@ -411,7 +414,7 @@ for {
         t.gender === "f",
         t.age > 25
       ))
-      .orderByOne(_.age.desc)
+      .orderBy(_.age.desc)
       .limit(10)
       .render
   }
@@ -434,11 +437,56 @@ LIMIT 10</code>
           </section>
 
           <section class="docs-section" id="item-4-2">
+          <h2 class="section-heading">Row as case class</h2>
+          <div class="docs-code-block">
+            <pre class="rounded">
+              <code class="language-scala hljs">case class ProductItem(id: Int, name: String, price: Float)
+
+class Product extends Model("product") {
+  val id = column[Int]("id")
+  val name = column[String]("name")
+  val price = column[Float]("price")
+  val item = read[ProductItem](id, name, price)
+}
+
+val product = Model.get[Product]
+
+val stm = sql
+  .select(product)
+  .colsType(_.item)
+  .where(_.price < 100.0)
+  .render
+
+// returns List[ProductItem]</code>
+              </pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-3">
+          <h2 class="section-heading">Row as Vector</h2>
+          <div class="docs-code-block">
+            <pre class="rounded">
+              <code class="language-scala hljs">sql
+  .select(user)
+  .colsVector(t => Vector(
+    t.id,
+    t.username,
+    t.email
+  ))
+  .where(_.age < 25)
+  .render
+
+// returns List[Vector[Any]]</code>
+              </pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-4-4">
           	<h2 class="section-heading">Where</h2>
-          	<p>Refer to <a href="#item-11-2">Operators</a> for a list of operators. If you have only one condition you can use the <code>whereOne</code> method for convenience.</p>
+          	<p>Refer to <a href="#item-11-2">Operators</a> for a list of operators.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">.whereOne(_.id > 100)
+								<code class="language-scala hljs">.where(_.id > 100)
 
 .where(t => Seq(
     t.gender === "f",
@@ -448,7 +496,7 @@ LIMIT 10</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-3">
+          <section class="docs-section" id="item-4-5">
           	<h2 class="section-heading">AND / OR</h2>
           	<p>
             <div class="docs-code-block">
@@ -464,7 +512,7 @@ LIMIT 10</code>
 ))
 // WHERE "age" > 25 AND ("country" == 'RU' OR "country" == 'FR')
 
-.whereOne(t => Or(
+.where(t => Or(
   And(
     t.country === "RU",
     t.city === "Moscow"
@@ -479,7 +527,7 @@ LIMIT 10</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-4">
+          <section class="docs-section" id="item-4-6">
           	<h2 class="section-heading">Optional conditions</h2>
           	<p>Optional conditions for example from http GET request.</p>
             <div class="docs-code-block">
@@ -504,7 +552,7 @@ LIMIT 10</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-5">
+          <section class="docs-section" id="item-4-7">
           	<h2 class="section-heading">Null values</h2>
           	<p>If you have null values in a column you can use one of the folloing ways to turn the result into <code>Option[T]</code></p>
             <div class="docs-code-block">
@@ -524,7 +572,7 @@ cols1(t => Fn.coalesce(t.city, "No city"))</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-6">
+          <section class="docs-section" id="item-4-8">
           	<h2 class="section-heading">Nested query</h2>
           	<p>Nested queries are just like any other query but with <code>asSubquery</code> instead of <code>render</code>
             <div class="docs-code-block">
@@ -534,11 +582,11 @@ cols1(t => Fn.coalesce(t.city, "No city"))</code>
 sql
   .select(user)
   .cols2(_.basic)
-  .whereOne(_.email.in(
+  .where(_.email.in(
     sql
       .select(newsletter)
       .cols1(_.email)
-      .whereOne(_.isSubscribed === true)
+      .where(_.isSubscribed === true)
       .asSubquery
   ))
   .render</code>
@@ -557,7 +605,7 @@ WHERE "email" = ANY(
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-7">
+          <section class="docs-section" id="item-4-9">
           	<h2 class="section-heading">Cache</h2>
           	<p>For increased performance you can cache your queries. The SQL string will be created only once and you get the same performance as you get with raw queries.</p>
             <div class="docs-code-block">
@@ -566,7 +614,7 @@ WHERE "email" = ANY(
   .select(user)
   .cols1(_.username)
   .all
-  .orderByOne(_.age.asc)
+  .orderBy(_.age.asc)
   .cacheWhere2(t => (
     t.country.cacheEq,
     t.age.cacheGt
@@ -584,7 +632,7 @@ ORDER BY "age" ASC</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-8">
+          <section class="docs-section" id="item-4-10">
           	<h2 class="section-heading">Cached with WHERE</h2>
             <p>You can use normal WHERE conditions with cached queries.</p>
             <div class="docs-code-block">
@@ -592,8 +640,8 @@ ORDER BY "age" ASC</code>
 								<code class="language-scala hljs">val stm = sql
   .select(user)
   .cols1(_.username)
-  .whereOne(_.age > 25)
-  .orderByOne(_.age.asc)
+  .where(_.age > 25)
+  .orderBy(_.age.asc)
   .cacheWhere1(_.country.cacheEq)
 
 db.query(stm.render("CN"))</code>
@@ -631,7 +679,7 @@ ORDER BY "age" ASC</code>
     t.a.age > 25,
     t.b.spending > 1000
   ))
-  .orderByOne(_.b.spending.desc)
+  .orderBy(_.b.spending.desc)
   .limit(10)
   .render
   // returns Tuple3[Int, String, Int]</code>
@@ -704,6 +752,31 @@ LIMIT 10</code>
           </section>
 
           <section class="docs-section" id="item-6-2">
+          <h2 class="section-heading">Insert case class</h2>
+          <div class="docs-code-block">
+            <pre class="rounded">
+              <code class="language-scala hljs">case class ProductAdd(name: String, price: Float)
+
+class Product extends Model("product") {
+  val id = column[Int]("id")
+  val name = column[String]("name")
+  val price = column[Float]("price")
+  val add = write[ProductAdd](name, price)
+}
+
+val product = Model.get[Product]
+
+val stm = sql
+  .colsType(_.add)
+  .render(ProductAdd("Banana", 12.5))</code>
+              </pre>
+              <pre class="rounded">
+                <code class="language-pgsql hljs">INSERT INTO "product" ("name", "price") VALUES ('Banana', 12.5)</code>
+              </pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-6-3">
 					<h2 class="section-heading">Cache insert queries</h2>
 					<div class="docs-code-block">
 						<pre class="rounded">
@@ -725,7 +798,7 @@ db.exec {
             </div>
           </section>
 
-          <section class="docs-section" id="item-6-3">
+          <section class="docs-section" id="item-6-4">
 					<h2 class="section-heading">Insert key/value</h2>
 					<p>If you need to insert columns that exceed the limits of a tuple, larger than 22.</p>
 					<div class="docs-code-block">
@@ -744,7 +817,7 @@ db.exec {
             </div>
           </section>
 
-          <section class="docs-section" id="item-6-4">
+          <section class="docs-section" id="item-6-5">
 					<h2 class="section-heading">Insert returning</h2>
 					<div class="docs-code-block">
 						<pre class="rounded">
@@ -775,7 +848,7 @@ RETURNING
             </div>
           </section>
 
-          <section class="docs-section" id="item-6-5">
+          <section class="docs-section" id="item-6-6">
 					<h2 class="section-heading">Insert on conflict do nothing</h2>
 					<p>You can take advantage of <code>ON CONFLICT DO NOTHING</code> to avoid errors on columns with <code>UNIQUE</code> constraint.</p>
 					<div class="docs-code-block">
@@ -798,9 +871,9 @@ ON CONFLICT DO NOTHING</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-6-6">
+          <section class="docs-section" id="item-6-7">
 					<h2 class="section-heading">Upsert</h2>
-					<p>The updated column has to be one of the columns you intend to insert. Use <code>doUpdateOne</code> to update one column and <code>doUpdate</code> to update multible columns.</p>
+					<p>The updated column has to be one of the columns you intend to insert.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
 							<code class="language-scala hljs">sql
@@ -810,7 +883,7 @@ ON CONFLICT DO NOTHING</code>
     t.email
   ))
   .onConflictOnColumn(_.username)
-  .doUpdateOne(_.email)
+  .doUpdate(_.email)
   .render(("bob", "bob@hotmail.com"))</code>
             	</pre>
 							<pre class="rounded">
@@ -823,7 +896,7 @@ DO UPDATE SET "email" = 'bob@mail.com'</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-6-7">
+          <section class="docs-section" id="item-6-8">
 					<h2 class="section-heading">Insert where not exists</h2>
 					<p>If you need to avoid duplication on a column that does not have a unique constraint you can use <code>whereNotExists</code>. Also, if you are makeing multible insert statements concurrently, from a stream for example, you will run into problems using <code>onConflictDoNothing</code>.<p>
 					<div class="docs-code-block">
@@ -834,7 +907,7 @@ DO UPDATE SET "email" = 'bob@mail.com'</code>
     t.username,
     t.email
   ))
-  .whereNotExistsOne(_.username)
+  .whereNotExists(_.username)
   .render(("bob", "bob@mail.com"))</code>
             	</pre>
 							<pre class="rounded">
@@ -850,7 +923,7 @@ WHERE NOT EXISTS (
             </div>
           </section>
 
-          <section class="docs-section" id="item-6-8">
+          <section class="docs-section" id="item-6-9">
 					<h2 class="section-heading">Insert from select</h2>
 					<div class="docs-code-block">
 						<pre class="rounded">
@@ -858,10 +931,10 @@ WHERE NOT EXISTS (
   .insert(newsletter)
   .cols1(_.email)
   .fromSelect(
-    db
+    sql
       .select(user)
       .cols1(_.email)
-      .whereOne(_.isActive === true)
+      .where(_.isActive === true)
       .asSubquery
   )
   .render</code>
@@ -889,8 +962,8 @@ WHERE "is_active" = true</code>
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .update(user)
-  .setOne(_.country ==> "JP")
-  .whereOne(_.id === 103)
+  .set(_.country ==> "JP")
+  .where(_.id === 103)
   .render
 
 db.exec(stm)</code>
@@ -911,7 +984,7 @@ db.exec(stm)</code>
     t.country ==> "IS",
     t.city ==> "Reykjavik"
   ))
-  .whereOne(_.id === 31)
+  .where(_.id === 31)
   .returning4(t => (
     t.id,
     t.email,
@@ -974,7 +1047,7 @@ WHERE "id" = 27</code>
 							<pre class="rounded">
 								<code class="language-scala hljs">sql
   .delete(user)
-  .whereOne(_.id === 103)
+  .where(_.id === 103)
   .render</code>
             	</pre>
 							<pre class="rounded">
@@ -989,7 +1062,7 @@ WHERE "id" = 27</code>
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .delete(user)
-  .whereOne(_.id === 103)
+  .where(_.id === 103)
   .cache
 
 db.exec(stm)</code>
@@ -1006,7 +1079,7 @@ db.exec(stm)</code>
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .delete(user)
-  .whereOne(_.id === 103)
+  .where(_.id === 103)
   .returning1(_.email)
   .render
 
@@ -1032,7 +1105,7 @@ RETURNING "email"</code>
 							<pre class="rounded">
 								<code class="language-scala hljs">val stm = sql
   .count(user)
-  .whereOne(_.country === "IT")
+  .where(_.country === "IT")
   .render
 
 db.queryHead(stm)</code>
@@ -1057,7 +1130,7 @@ sql
     Max.int(t.age),
     Min.int(t.age)
   ))
-  .whereOne(_.country === "US")
+  .where(_.country === "US")
   .render</code>
             	</pre>
 							<pre class="rounded">
