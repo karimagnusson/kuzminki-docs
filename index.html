@@ -119,7 +119,8 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-10">Cached with WHERE</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Joins</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Join</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Join types</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Extended Join</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-5-3">Join types</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-6"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Insert</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-6-1">Basic insert</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-6-2">Insert case class</a></li>
@@ -197,28 +198,27 @@ object ExampleApp extends zio.App {
   val client = Model.get[Client]
 
   val job = for {
-    _ <- db.exec {
-      sql
-        .insert(client)
-        .cols2(t => (t.username, t.age))
-        .render(("Joe", 35))
-    }
-    _ <- db.exec {
-      sql
-        .update(client)
-        .set(_.age ==> 24)
-        .where(_.id === 4)
-        .render
-    }
-    _ <- db.exec(sql.delete(client).where(_.id === 7).render)
-    clients <- db.query {
-      sql
-        .select(client)
-        .cols3(_.all)
-        .where(_.age > 25)
-        .limit(5)
-        .render
-    }
+
+    _ <- sql
+      .insert(client)
+      .cols2(t => (t.username, t.age))
+      .run(("Joe", 35))
+    
+    _ <- sql
+      .update(client)
+      .set(_.age ==> 24)
+      .where(_.id === 4)
+      .run
+    
+    _ <- sql.delete(client).where(_.id === 7).run
+    
+    clients <- sql
+      .select(client)
+      .cols3(_.all)
+      .where(_.age > 25)
+      .limit(5)
+      .run
+    
     _ <- ZIO.foreach(clients) {
       case (id, username, age) =>
         putStrLn(s"$id $username $age")
@@ -240,15 +240,11 @@ object ExampleApp extends zio.App {
           	<h2 class="section-heading">Methods</h2>
             <div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">.query(stm) // Seq[T]
+								<code class="language-scala hljs">.run // List[T]
 
-.queryHead(stm) // T
+.runHead // T
 
-.queryHeadOpt(stm) // Option[T]
-
-.exec(stm) // Unit
-
-.execNum(stm) // Int</code>
+.runHeadOpt // Option[T]</code>
             	</pre>
             </div>
           </section>
@@ -402,23 +398,19 @@ val user = Model.get[User]</code>
 
 val user = Model.get[User]
 
-for {
-  users <- db.query {
-    sql
-      .select(user)
-      .cols2(t => (
-        t.id,
-        t.username
-      ))
-      .where(t => Seq(
-        t.gender === "f",
-        t.age > 25
-      ))
-      .orderBy(_.age.desc)
-      .limit(10)
-      .render
-  }
-} yield users</code>
+sql
+  .select(user)
+  .cols2(t => (
+    t.id,
+    t.username
+  ))
+  .where(t => Seq(
+    t.gender === "f",
+    t.age > 25
+  ))
+  .orderBy(_.age.desc)
+  .limit(10)
+  .run</code>
             	</pre>
             </div>
 
@@ -451,11 +443,11 @@ class Product extends Model("product") {
 
 val product = Model.get[Product]
 
-val stm = sql
+sql
   .select(product)
   .colsType(_.item)
   .where(_.price < 100.0)
-  .render
+  .run
 
 // returns List[ProductItem]</code>
               </pre>
@@ -474,7 +466,7 @@ val stm = sql
     t.email
   ))
   .where(_.age < 25)
-  .render
+  .run
 
 // returns List[Vector[Any]]</code>
               </pre>
@@ -577,24 +569,26 @@ cols1(t => Fn.coalesce(t.city, "No city"))</code>
           	<p>Nested queries are just like any other query but with <code>asSubquery</code> instead of <code>render</code>
             <div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">val newsletter = Model.get[Newsletter]
+								<code class="language-scala hljs">class Newsletter extends Model("newsletter") {
+  val email = column[String]("email")
+  val isSubscribed = column[Boolean]("is_subscribed")
+}
+
+val newsletter = Model.get[Newsletter]
 
 sql
   .select(user)
-  .cols2(_.basic)
+  .cols1(_.username)
   .where(_.email.in(
     sql
       .select(newsletter)
       .cols1(_.email)
       .where(_.isSubscribed === true)
-      .asSubquery
   ))
-  .render</code>
+  .run</code>
             	</pre>
 							<pre class="rounded">
-								<code class="language-pgsql hljs">SELECT
-  "id",
-  "username"
+								<code class="language-pgsql hljs">SELECT "username"
 FROM "user_profile"
 WHERE "email" = ANY(
   SELECT "email"
@@ -620,7 +614,7 @@ WHERE "email" = ANY(
     t.age.cacheGt
   ))
 
-db.query(stm.render(("CN", 25)))</code>
+stm.run(("CN", 25))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT "username"
@@ -644,7 +638,7 @@ ORDER BY "age" ASC</code>
   .orderBy(_.age.asc)
   .cacheWhere1(_.country.cacheEq)
 
-db.query(stm.render("CN"))</code>
+stm.run("CN")</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT "username"
@@ -681,8 +675,8 @@ ORDER BY "age" ASC</code>
   ))
   .orderBy(_.b.spending.desc)
   .limit(10)
-  .render
-  // returns Tuple3[Int, String, Int]</code>
+  .run
+  // returns List[Tuple3[Int, String, Int]]</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
@@ -701,6 +695,58 @@ LIMIT 10</code>
           </section>
 
           <section class="docs-section" id="item-5-2">
+            <h2 class="section-heading">Join result types</h2>
+            <p>You can have a join query return a case class.</p>
+            <div class="docs-code-block">
+            <pre class="rounded">
+              <code class="language-scala hljs">case class UserSpending(userId: Int, username: String, spending: Int)
+
+class UserCustomer extends JoinRead[User, Customer] {
+  val userSpending = read[UserSpending](a.id, a.username, b.spending)
+}
+
+val userCustomer = new UserCustomer
+implicit val userCustomerConv = userCustomer.convert
+
+sql
+  .select(userCustomer)
+  .colsType(_.userSpending)
+  .joinOn(_.id, _.userId)
+  .where(_.a.age > 25)
+  .orderBy(_.b.spending.desc)
+  .limit(10)
+  .run
+  // returns List[UserCustomer]</code>
+              </pre>
+              <p>You can also define results as tuples or a Vector</p>
+              <pre class="rounded">
+                <code class="language-pgsql hljs">class UserCustomer extends JoinRead[User, Customer] {
+  val userSpending = read[UserSpending](a.id, a.username, b.spending)
+  // colsType(_.userSpending)
+
+  val userSpendingTuple = (a.id, a.username, b.spending)
+  // cols3(_.userSpendingTuple)
+
+  val userSpendingVector = Vector(a.id, a.username, b.spending)
+  // colsVector(_.userSpendingVector)
+}</code>
+              </pre>
+              <pre class="rounded">
+                <code class="language-pgsql hljs">SELECT
+  "a"."id",
+  "a"."username",
+  "b"."spending"
+FROM "user_profile" "a"
+INNER JOIN "customer" "b"
+ON "a"."id" = "b"."user_id"
+WHERE "a"."age" > 25
+ORDER BY "b"."spending" DESC
+LIMIT 10</code>
+              </pre>
+            </div>
+          </section>
+
+          <section class="docs-section" id="item-5-3">
 					<h2 class="section-heading">Join types</h2>
 					<p>The following joins are available. Refer to the section <a href="#item-4-5">Null values</a> to avoid problems that may come up with joins.
 					 <div class="docs-code-block">
@@ -735,15 +781,13 @@ LIMIT 10</code>
 					<p>To insert you define a tuple of columns and then pass a tuple of the column types to <code>render</code>. In this case <code>Tuple2[String, String]</code>.</p>
 					<div class="docs-code-block">
 						<pre class="rounded">
-							<code class="language-scala hljs">db.exec {
-  sql
-    .insert(user)
-    .cols2(t => (
-      t.username,
-      t.email
-    ))
-    .render(("bob", "bob@mail.com"))
-}</code>
+							<code class="language-scala hljs">sql
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
+  .run(("bob", "bob@mail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
@@ -766,9 +810,9 @@ class Product extends Model("product") {
 
 val product = Model.get[Product]
 
-val stm = sql
+sql
   .colsType(_.add)
-  .render(ProductAdd("Banana", 12.5))</code>
+  .run(ProductAdd("Banana", 12.5))</code>
               </pre>
               <pre class="rounded">
                 <code class="language-pgsql hljs">INSERT INTO "product" ("name", "price") VALUES ('Banana', 12.5)</code>
@@ -788,9 +832,7 @@ val stm = sql
   ))
   .cache
 
-db.exec {
-  stm.render(("bob", "bob@mail.com"))
-}</code>
+stm.run(("bob", "bob@mail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
@@ -809,7 +851,7 @@ db.exec {
     t.username ==> "bob",
     t.email ==> "bob@mail.com"
   ))
-  .render</code>
+  .run</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile" ("username", "email") VALUES ('bob', 'bob@mail.com')</code>
@@ -821,7 +863,7 @@ db.exec {
 					<h2 class="section-heading">Insert returning</h2>
 					<div class="docs-code-block">
 						<pre class="rounded">
-							<code class="language-scala hljs">val stm = sql
+							<code class="language-scala hljs">sql
   .insert(user)
   .cols2(t => (
     t.username,
@@ -832,9 +874,7 @@ db.exec {
     t.username,
     t.email
   ))
-  .render(("bob", "bob@mail.com"))
-
-db.queryHead(stm)</code>
+  .runHead(("bob", "bob@mail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
@@ -860,7 +900,7 @@ RETURNING
     t.email
   ))
   .onConflictDoNothing
-  .render(("bob", "bob@mail.com"))</code>
+  .run(("bob", "bob@mail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
@@ -884,7 +924,7 @@ ON CONFLICT DO NOTHING</code>
   ))
   .onConflictOnColumn(_.username)
   .doUpdate(_.email)
-  .render(("bob", "bob@hotmail.com"))</code>
+  .run(("bob", "bob@hotmail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
@@ -908,7 +948,7 @@ DO UPDATE SET "email" = 'bob@mail.com'</code>
     t.email
   ))
   .whereNotExists(_.username)
-  .render(("bob", "bob@mail.com"))</code>
+  .run(("bob", "bob@mail.com"))</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "user_profile"
@@ -935,9 +975,8 @@ WHERE NOT EXISTS (
       .select(user)
       .cols1(_.email)
       .where(_.isActive === true)
-      .asSubquery
   )
-  .render</code>
+  .run</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">INSERT INTO "newsletter" ("email")
@@ -960,13 +999,11 @@ WHERE "is_active" = true</code>
 						<p></p>
 						<div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">val stm = sql
+								<code class="language-scala hljs">sql
   .update(user)
   .set(_.country ==> "JP")
   .where(_.id === 103)
-  .render
-
-db.exec(stm)</code>
+  .run</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user" SET "country" = 'JP' WHERE id = 103</code>
@@ -978,7 +1015,7 @@ db.exec(stm)</code>
 						<h2 class="section-heading">Update returning</h2>
 						<div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">val stm = sql
+								<code class="language-scala hljs">sql
   .update(user)
   .set(t => Seq(
     t.country ==> "IS",
@@ -991,9 +1028,7 @@ db.exec(stm)</code>
     t.country,
     t.city
   ))
-  .render
-
-db.queryHeadOpt(stm)</code>
+  .runHeadOpt</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user_profile"
@@ -1022,9 +1057,7 @@ RETURNING
   ))
   .cacheWhere1(_.id.cacheEq)
 
-db.exec {
-  stm.render((true, 10), 27)
-}</code>
+stm.run((true, 10), 27)</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">UPDATE "user_profile"
@@ -1048,7 +1081,7 @@ WHERE "id" = 27</code>
 								<code class="language-scala hljs">sql
   .delete(user)
   .where(_.id === 103)
-  .render</code>
+  .run</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
@@ -1065,7 +1098,7 @@ WHERE "id" = 27</code>
   .where(_.id === 103)
   .cache
 
-db.exec(stm)</code>
+stm.run</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile" WHERE "id" = 103</code>
@@ -1081,9 +1114,7 @@ db.exec(stm)</code>
   .delete(user)
   .where(_.id === 103)
   .returning1(_.email)
-  .render
-
-db.queryHeadOpt(stm)</code>
+  .runHeadOpt</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">DELETE FROM "user_profile"
@@ -1103,12 +1134,10 @@ RETURNING "email"</code>
 						<h2 class="section-heading">Count</h2>
 						<div class="docs-code-block">
 							<pre class="rounded">
-								<code class="language-scala hljs">val stm = sql
+								<code class="language-scala hljs">sql
   .count(user)
   .where(_.country === "IT")
-  .render
-
-db.queryHead(stm)</code>
+  .runHead(stm)</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT count(*) FROM "user_profile" WHERE "country" = 'IT'</code>
@@ -1131,7 +1160,7 @@ sql
     Min.int(t.age)
   ))
   .where(_.country === "US")
-  .render</code>
+  .run</code>
             	</pre>
 							<pre class="rounded">
 								<code class="language-pgsql hljs">SELECT
