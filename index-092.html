@@ -106,19 +106,17 @@
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-1">Creating a model</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-2">Custom methods</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-3-3">Create model instance</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-3-4">Array fields</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-4"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Select</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-1">Select query</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Row as case class</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">Row as Seq</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-4-4">Row as JSON</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">Where</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">AND / OR</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Optional conditions</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-8">Null values</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-9">Nested query</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-10">Cache</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-11">Cached with WHERE</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">Row as Vector</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-4">Where</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-5">AND / OR</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-6">Optional conditions</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-7">Null values</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-8">Nested query</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-9">Cache</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-4-10">Cached with WHERE</a></li>
 				    <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Joins</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Join</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Extended Join</a></li>
@@ -167,8 +165,6 @@
 
 								<p>Kuzminki is written for those who love SQL. Queries are written with the same logic you write SQL statements. As a result the code is easy to read and memorise while the resulting SQL statement is predictable.</p>
 
-                <p>Kuzminki is available for ZIO, ZIO 2 and Akka.</p>
-
                 <p>On Github for ZIO 1 <a href="https://github.com/karimagnusson/kuzminki-zio" target="_blank">
                   https://github.com/karimagnusson/kuzminki-zio
                 </a></p>
@@ -176,27 +172,19 @@
                 <p>On Github for ZIO 2<a href="https://github.com/karimagnusson/kuzminki-zio-2" target="_blank">
                   https://github.com/karimagnusson/kuzminki-zio-2
                 </a></p>
-
-                <p>On Github for Akka<a href="https://github.com/karimagnusson/kuzminki-akka" target="_blank">
-                  https://github.com/karimagnusson/kuzminki-akka
-                </a></p>
 						</section>
 					</header>
 
 					<section class="docs-section" id="item-1-1">
 						<h2 class="section-heading">Installation</h2>
-            <!--<p>Compiled for Scala 2.12. You can find jars compiled for 2.11 and 2.13 <a href="#item-12-1">below</a></p>-->
+            <p>Compiled for Scala 2.12. You can find jars compiled for 2.11 and 2.13 <a href="#item-12-1">below</a></p>
 						<h5>For ZIO 1</h5>
             <div class="docs-code-block">
-							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.3"</code></pre>
+							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.2"</code></pre>
 						</div>
             <h5 style="margin-top: 10px;">For ZIO 2</h5>
             <div class="docs-code-block">
-              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.3"</code></pre>
-            </div>
-            <h5 style="margin-top: 10px;">For Akka</h5>
-            <div class="docs-code-block">
-              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-akka" % "0.9.3"</code></pre>
+              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.2"</code></pre>
             </div>
 					</section>
 
@@ -266,21 +254,11 @@ object ExampleApp extends zio.App {
                 <code class="language-scala hljs">// query
 val stm = sql.select(client).cols3(_.all).where(_.age > 25).limit(5)
 
-stm.run returns RIO[Has[Kuzminki] with Blocking, List[T]]
+stm.run and db.query(stm.render) returns RIO[Has[Kuzminki] with Blocking, List[T]]
 
-stm.runHead returns RIO[Has[Kuzminki] with Blocking, T]
+stm.runHead and db.queryHead(stm.render) returns RIO[Has[Kuzminki] with Blocking, T]
 
-stm.runHeadOpt returns RIO[Has[Kuzminki] with Blocking, Option[T]]
-
-// modify row
-
-implicit val toMyType: SomeRow => MyType = row => //...
-
-stm.runAs[MyType] returns RIO[Has[Kuzminki] with Blocking, List[MyType]]
-
-stm.runHeadAs[MyType] returns RIO[Has[Kuzminki] with Blocking, MyType]
-
-stm.runHeadOptAs[MyType] returns RIO[Has[Kuzminki] with Blocking, Option[MyTypes]]
+stm.runHeadOpt and db.queryHeadOpt(stm.render) returns RIO[Has[Kuzminki] with Blocking, Option[T]]
 
 // operation
 val stm = sql.update(client).set(_.age ==> 24).where(_.id === 4)
@@ -309,7 +287,8 @@ stm.runNum and db.execNum(stm.render) returns RIO[Has[Kuzminki] with Blocking, I
   .withPort("{PORT}") // default = 5432
   .withUser("{USER}}")
   .withPassword("{PASSWORD}")
-  .withOptions(Map(...))</code>
+  .withOptions(Map(...))
+  .getConfig</code>
             	</pre>
             </div>
           </section>
@@ -340,9 +319,7 @@ stm.runNum and db.execNum(stm.render) returns RIO[Has[Kuzminki] with Blocking, I
 							<pre class="rounded">
 								<code class="language-scala hljs">for { 
   db <- Kuzminki.create(dbConfig)
-  users <- db.query {
-    sql.select(user).cols1(_.username.all.orderBy(_.id.asc)
-  }
+  users <- db.query(fetchSomeUsers)
 } yield users</code>
             	</pre>
             </div>
@@ -354,10 +331,10 @@ stm.runNum and db.execNum(stm.render) returns RIO[Has[Kuzminki] with Blocking, I
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">// for .query .queryHead .queryHeadOpt
-val getConfig = DbConfig.forDb("company").withPoolSize(5)
+val getConfig = DbConfig.forDb("company").withPoolSize(5).getConfig
 
 // for .exec .execNum
-val setConfig = DbConfig.forDb("company").withPoolSize(5)
+val setConfig = DbConfig.forDb("company").withPoolSize(5).getConfig
 
 val dbLayer = Kuzminki.layerSplit(getConfig, setConfig)</code>
             	</pre>
@@ -424,42 +401,6 @@ val user = Model.get[User]</code>
             	</pre>
             </div>
           </section>
-
-          <section class="docs-section" id="item-3-4">
-            <h2 class="section-heading">Array fields</h2>
-            <p>Array fields can be created for all the available types. Array fields can be filtered using <code>has</code> <code>hasNot</code> <code>overlap</code> <code>overlapNot</code> and updated using <code>append</code> <code>prepend</code> <code>remove</code>.</p>
-            <div class="docs-code-block">
-              <pre class="rounded">
-                <code class="language-scala hljs">class Nums extends Model("demo") {
-  val id = column[Int]("id")
-  val numbers = column[Seq[Int]]("numbers")
-}
-
-val nums = Model.get[Nums]
-
-for {
-  id <- sql
-    .insert(nums)
-    .cols1(_.numbers)
-    .returning1(_.id)
-    .run(List(1, 2, 3))
-
-  _ <- sql
-    .update(nums)
-    .set(_.numbers.append(4)) // append, prepend, remove
-    .where(_.id === id)
-    .run
-
-  numbers <- sql
-    .select(nums)
-    .cols1(_.numbers)
-    .where(_.numbers.has(2))  // has, hasNot, overlap, overlapNot
-    .run
-} yield numbers // List[Vector[Int]]</code>
-              </pre>
-            </div>
-          </section>
-
 			    </article>
 			    
 			    <article class="docs-article" id="section-4">
@@ -471,7 +412,7 @@ for {
 				    </header>
 				    <section class="docs-section" id="item-4-1">
 							<h2 class="section-heading">Select query</h2>
-							<p>You select the columns as tuple of model columns. The query will return tuple of the column types. In this case <code>Seq[Tuple2[Int, String]]</code>. If you need more than 22 columns you can use <code>colsSeq</code> or <code>colsType</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>orderBy(_.age.asc)</code>.
+							<p>You select the columns as tuple of model columns. The query will return tuple of the column types. In this case <code>Seq[Tuple2[Int, String]]</code>. If you need more than 22 columns you can use <code>colsVector</code> or <code>colsType</code>. To order by <code>ASC</code> rather than <code>DESC</code> use <code>orderBy(_.age.asc)</code>.
 						 	<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.api._
@@ -534,12 +475,12 @@ sql
           </section>
 
           <section class="docs-section" id="item-4-3">
-          <h2 class="section-heading">Row as Seq</h2>
+          <h2 class="section-heading">Row as Vector</h2>
           <div class="docs-code-block">
             <pre class="rounded">
               <code class="language-scala hljs">sql
   .select(user)
-  .colsSeq(t => List(
+  .colsVector(t => Vector(
     t.id,
     t.username,
     t.email
@@ -552,60 +493,6 @@ sql
           </section>
 
           <section class="docs-section" id="item-4-4">
-            <h2 class="section-heading">Row as JSON</h2>
-            <p>You can get the result as JSON, using your favorite JSON library. It comes in handy if you are, for example, writing a REST web service.</p>
-            <div class="docs-code-block">
-              <pre class="rounded">
-                <code class="language-scala hljs">// See PlayJsonLoader below
-implicit val loadJson: Seq[Tuple2[String, Any]] => JsValue = data => PlayJsonLoader.load(data)
-
-sql
-  .select(user)
-  .colsNamed(t => List(
-    t.id,        // Column name is used as a key.
-    t.username,  // If you want a different key:
-    t.email      // ("user_id"  -> t.id)
-  ))
-  .where(_.age < 25)
-  .runAs[JsValue]
-  // returns List[JsValue]</code>
-              </pre>
-            </div>
-
-            <p>Write something along these lines to use the JSON library of your choosing.</p>
-
-            <div class="docs-code-block">
-              <pre class="rounded">
-                <code class="language-scala hljs">import play.api.libs.json._
-
-object PlayJsonLoader {
-
-  val toJsValue: Any => JsValue = {
-    case v: String      => JsString(v)
-    case v: Boolean     => JsBoolean(v)
-    case v: Short       => JsNumber(v)
-    case v: Int         => JsNumber(v)
-    case v: Long        => JsNumber(v)
-    case v: Float       => JsNumber(v)
-    case v: Double      => JsNumber(v)
-    case v: BigDecimal  => JsNumber(v)
-    case v: Time        => Json.toJson(v)
-    case v: Date        => Json.toJson(v)
-    case v: Timestamp   => Json.toJson(v)
-    case v: Option[_]   => v.map(toJsValue).getOrElse(JsNull)
-    case v: Seq[_]      => JsArray(v.map(toJsValue))
-    case _              => throw new Exception("Cannot convert to JsValue")
-  }
-
-  def load(data: Seq[Tuple2[String, Any]]): JsValue = {
-    JsObject(data.map(p => (p._1, toJsValue(p._2))))
-  }
-}</code>
-              </pre>
-            </div>
-          </section>
-
-          <section class="docs-section" id="item-4-5">
           	<h2 class="section-heading">Where</h2>
           	<p>Refer to <a href="#item-11-2">Operators</a> for a list of operators.</p>
             <div class="docs-code-block">
@@ -620,7 +507,7 @@ object PlayJsonLoader {
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-6">
+          <section class="docs-section" id="item-4-5">
           	<h2 class="section-heading">AND / OR</h2>
           	<p>
             <div class="docs-code-block">
@@ -651,7 +538,7 @@ object PlayJsonLoader {
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-7">
+          <section class="docs-section" id="item-4-6">
           	<h2 class="section-heading">Optional conditions</h2>
           	<p>Optional conditions for example from http GET request.</p>
             <div class="docs-code-block">
@@ -676,7 +563,7 @@ object PlayJsonLoader {
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-8">
+          <section class="docs-section" id="item-4-7">
           	<h2 class="section-heading">Null values</h2>
           	<p>If you have null values in a column you can use one of the folloing ways to turn the result into <code>Option[T]</code></p>
             <div class="docs-code-block">
@@ -696,7 +583,7 @@ cols1(t => Fn.coalesce(t.city, "No city"))</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-9">
+          <section class="docs-section" id="item-4-8">
           	<h2 class="section-heading">Nested query</h2>
             <div class="docs-code-block">
 							<pre class="rounded">
@@ -730,7 +617,7 @@ WHERE "email" = ANY(
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-10">
+          <section class="docs-section" id="item-4-9">
           	<h2 class="section-heading">Cache</h2>
           	<p>For increased performance you can cache your queries. The SQL string will be created only once and you get the same performance as you get with raw queries.</p>
             <div class="docs-code-block">
@@ -757,7 +644,7 @@ ORDER BY "age" ASC</code>
             </div>
           </section>
 
-          <section class="docs-section" id="item-4-11">
+          <section class="docs-section" id="item-4-10">
           	<h2 class="section-heading">Cached with WHERE</h2>
             <p>You can use normal WHERE conditions with cached queries.</p>
             <div class="docs-code-block">
@@ -1415,12 +1302,12 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
 									    <td class="theme-bg-light">numeric</td>
 									    <td>BigDecimal</td>
 									</tr>
-                  <tr>
-                      <td class="theme-bg-light">time</td>
-                      <td>java.sql.Time</td>
-                  </tr>
 									<tr>
 									    <td class="theme-bg-light">date</td>
+									    <td>java.sql.Date</td>
+									</tr>
+									<tr>
+									    <td class="theme-bg-light">time</td>
 									    <td>java.sql.Date</td>
 									</tr>
 									<tr>
@@ -1551,30 +1438,6 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
 									    <td></th>
 									    <td>Any</td>
 									</tr>
-                  <tr>
-                      <td></th>
-                      <td>has</td>
-                      <td></th>
-                      <td>Array</td>
-                  </tr>
-                  <tr>
-                      <td></th>
-                      <td>hasNot</td>
-                      <td></th>
-                      <td>Array</td>
-                  </tr>
-                  <tr>
-                      <td></th>
-                      <td>overlap</td>
-                      <td></th>
-                      <td>Array</td>
-                  </tr>
-                  <tr>
-                      <td></th>
-                      <td>overlapNot</td>
-                      <td></th>
-                      <td>Array</td>
-                  </tr>
 								</tbody>
 							</table>
 						</div>
@@ -1588,38 +1451,19 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
 								    <tr>
 									    <th>Update operator</th>
 									    <th>Cache operator</th>
-                      <th>Type</th>
 									</tr>
 									<tr>
-									    <td>==></td>
+									    <td>==></th>
 									    <td>cacheAssign</td>
-                      <td>Any</td>
 									</tr>
 									<tr>
-									    <td>+=</td>
+									    <td>+=</th>
 									    <td>cacheIncrement</td>
-                      <td>Numbers</td>
 									</tr>
 									<tr>
-									    <td>-=</td>
+									    <td>-=</th>
 									    <td>cacheDecrement</td>
-                      <td>Numbers</td>
 									</tr>
-                  <tr>
-                      <td>prepend</td>
-                      <td></td>
-                      <td>Array</td>
-                  </tr>
-                  <tr>
-                      <td>append</td>
-                      <td></td>
-                      <td>Array</td>
-                  </tr>
-                  <tr>
-                      <td>remove</td>
-                      <td></td>
-                      <td>Array</td>
-                  </tr>
 								</tbody>
 							</table>
 						</div>
