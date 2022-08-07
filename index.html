@@ -73,7 +73,7 @@
           <div class="site-logo">
           	<a class="navbar-brand" href="index.html">
           		<!--<img class="logo-icon me-2" src="assets/images/coderdocs-logo.svg" alt="logo">-->
-          		<span class="logo-text">kuzminki-zio</span>
+          		<span class="logo-text">Kuzminki</span>
           	</a>
           </div>    
         </div><!--//docs-logo-wrapper-->
@@ -161,9 +161,9 @@
 		    <div class="container">
 			    <article class="docs-article" id="section-1">
 				    <header class="docs-header">
-					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2021-12-21</span></h1>
+					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2022-08-06</span></h1>
 					    <section class="docs-intro">
-						  	<p>Kuzminki-zio is query builder and access library for PostgreSQL and <a href="https://zio.dev/">ZIO</a> written in Scala.</p>
+						  	<p>Kuzminki is query builder and access library for PostgreSQL written in Scala.</p>
 
 								<p>Kuzminki is written for those who love SQL. Queries are written with the same logic you write SQL statements. As a result the code is easy to read and memorise while the resulting SQL statement is predictable.</p>
 
@@ -202,6 +202,7 @@
 
 				  <section class="docs-section" id="item-1-2">
 						<h2 class="section-heading">Example</h2>
+            <p>This example is for ZIO. For ZIO 2 and Akka refer to the respective github pages.
 						<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">import zio._
@@ -265,29 +266,20 @@ object ExampleApp extends zio.App {
               <pre class="rounded">
                 <code class="language-scala hljs">// query
 val stm = sql.select(client).cols3(_.all).where(_.age > 25).limit(5)
-
-stm.run returns RIO[Has[Kuzminki] with Blocking, List[T]]
-
-stm.runHead returns RIO[Has[Kuzminki] with Blocking, T]
-
-stm.runHeadOpt returns RIO[Has[Kuzminki] with Blocking, Option[T]]
+stm.run: List[T]
+stm.runHead: T
+stm.runHeadOpt: Option[T]
 
 // modify row
-
 implicit val toMyType: SomeRow => MyType = row => //...
-
-stm.runAs[MyType] returns RIO[Has[Kuzminki] with Blocking, List[MyType]]
-
-stm.runHeadAs[MyType] returns RIO[Has[Kuzminki] with Blocking, MyType]
-
-stm.runHeadOptAs[MyType] returns RIO[Has[Kuzminki] with Blocking, Option[MyTypes]]
+stm.runAs[MyType]: List[MyType]
+stm.runHeadAs[MyType]: MyType
+stm.runHeadOptAs[MyType]: Option[MyType]
 
 // operation
 val stm = sql.update(client).set(_.age ==> 24).where(_.id === 4)
-
-stm.run and db.exec(stm.render) returns RIO[Has[Kuzminki] with Blocking, Unit]
-
-stm.runNum and db.execNum(stm.render) returns RIO[Has[Kuzminki] with Blocking, Int]</code>
+stm.run: Unit
+stm.runNum: Int</code>
               </pre>
             </div>
           </section>
@@ -300,6 +292,7 @@ stm.runNum and db.execNum(stm.render) returns RIO[Has[Kuzminki] with Blocking, I
 					
 					<section class="docs-section" id="item-2-1">
 						<h2 class="section-heading">Config</h2>
+            <p>For Akka replace <code>forDb("{DB-NAME}")</code> with <code>withDispatcher("{NAME}")</code> default = "kuzminki-dispatcher"</p>
 						<div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">val dbConfig = DbConfig
@@ -335,7 +328,6 @@ stm.runNum and db.execNum(stm.render) returns RIO[Has[Kuzminki] with Blocking, I
 
           <section class="docs-section" id="item-2-3">
           	<h2 class="section-heading">Custom connection</h2>
-          	<p>Create an driver instance of the driver</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">for { 
