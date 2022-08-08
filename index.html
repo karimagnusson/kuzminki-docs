@@ -165,7 +165,7 @@
 					    <section class="docs-intro">
 						  	<p>Kuzminki is query builder and access library for PostgreSQL written in Scala.</p>
 
-								<p>Kuzminki is written for those who love SQL. Queries are written with the same logic you write SQL statements. As a result the code is easy to read and memorise while the resulting SQL statement is predictable.</p>
+								<p>Kuzminki is written for those who like SQL. Queries are written with the same logic you write SQL statements. As a result the code is easy to read and memorise while the resulting SQL statement is predictable.</p>
 
                 <p>Kuzminki is available for ZIO, ZIO 2 and Akka.</p>
 
@@ -248,7 +248,7 @@ object ExampleApp extends zio.App {
     }
   } yield ()
 
-  val dbConfig = DDbConfig.forDb("company").getConfig
+  val dbConfig = DbConfig.forDb("company")
   val dbLayer = Kuzminki.layer(dbConfig)
 
   override def run(args: List[String]): ZIO[ZEnv, Nothing, ExitCode] = {
