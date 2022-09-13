@@ -179,7 +179,8 @@
             <li class="nav-item"><a class="nav-link scrollto" href="#item-13-1">Postgres functions</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-13-2">Functions as methods</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-13-3">Create functions</a></li>
-				    
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-13-4">Available functions</a></li>
+
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-14"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Raw statements</a></li>
 				    
             <li class="nav-item"><a class="nav-link scrollto" href="#item-14-1">Select</a></li>
@@ -1768,6 +1769,93 @@ sql
             </div>
 
           </section>
+
+          <section class="docs-section" id="item-13-4">
+            <h2 class="section-heading">Available functions</h2>
+            <p><a href="https://www.postgresql.org/docs/current/functions-string.html">https://www.postgresql.org/docs/current/functions-string.html</a>
+            <div class="table-responsive my-4">
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                      <th>Function</th>
+                      <th>Column type</th>
+                  </tr>
+                  <tr>
+                      <td>Fn.coalesce(col, default)</td>
+                      <td>String</td>
+                  </tr>
+                   <tr>
+                      <td>Fn.concat(col, ...)</td>
+                      <td>String</td>
+                  </tr>
+                   <tr>
+                      <td>Fn.concatWs(glue, col, ...)</td>
+                      <td>String</td>
+                  </tr>
+                   <tr>
+                      <td>Fn.substr(col, start)</td>
+                      <td>String</td>
+                  </tr>
+                   <tr>
+                      <td>Fn.substr(col, start, len)</td>
+                      <td>String</td>
+                  </tr>
+                   <tr>
+                      <td>Fn.trim(col)</td>
+                      <td>String</td>
+                  </tr>
+                  <tr>
+                      <td>Fn.upper(col)</td>
+                      <td>String</td>
+                  </tr>
+                  <tr>
+                      <td>Fn.lower(col)</td>
+                      <td>String</td>
+                  </tr>
+                  <tr>
+                      <td>Fn.initcap(col)</td>
+                      <td>String</td>
+                  </tr>
+                  <tr>
+                      <td>Fn.round(col)</td>
+                      <td>BigDecimal</td>
+                  </tr>
+                  <tr>
+                      <td>Fn.roundStr(col)</td>
+                      <td>BigDecimal</td>
+                  </tr>
+                  <tr>
+                      <td>Cast.asString(col)</td>
+                      <td>Any</td>
+                  </tr>
+                  <tr>
+                      <td>Cast.asShort(col)</td>
+                      <td>Any</td>
+                  </tr>
+                  <tr>
+                      <td>Cast.asInt(col)</td>
+                      <td>Any</td>
+                  </tr>
+                  <tr>
+                      <td>Cast.asLong(col)</td>
+                      <td>Any</td>
+                  </tr>
+                  <tr>
+                      <td>Cast.asFloat(col)</td>
+                      <td>Any</td>
+                  </tr>
+                  <tr>
+                      <td>Cast.asDouble(col)</td>
+                      <td>Any</td>
+                  </tr>
+                  <tr>
+                      <td>Cast.asBigDecimal(col)</td>
+                      <td>Any</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
         </article>
 
         <!-- Raw SQL -->
@@ -1861,15 +1949,15 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
 									    <td>java.sql.Date</td>
 									</tr>
 									<tr>
-									    <td class="theme-bg-light">timestamp</th>
+									    <td class="theme-bg-light">timestamp</td>
 									    <td>java.sql.Timestamp</td>
 									</tr>
                   <tr>
-                      <td class="theme-bg-light">uuid</th>
+                      <td class="theme-bg-light">uuid</td>
                       <td>java.util.UUID</td>
                   </tr>
                   <tr>
-                      <td class="theme-bg-light">jsonb</th>
+                      <td class="theme-bg-light">jsonb</td>
                       <td>kuzminki.api.Jsonb(value: String)</td>
                   </tr>
 								</tbody>
@@ -1889,165 +1977,165 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
 									    <th>Type</th>
 									</tr>
 									<tr>
-									    <td>===</th>
+									    <td>===</td>
 									    <td>matches</td>
-									    <td>oprEq</th>
+									    <td>oprEq</td>
 									    <td>Any</td>
 									</tr>
 									<tr>
-									    <td>!==</th>
+									    <td>!==</td>
 									    <td>not</td>
-									    <td>oprNot</th>
+									    <td>oprNot</td>
 									    <td>Any</td>
 									</tr>
 									<tr>
-									    <td>></th>
+									    <td>></td>
 									    <td>gt</td>
-									    <td>oprGt</th>
+									    <td>oprGt</td>
 									    <td>Numbers and time</td>
 									</tr>
 									<tr>
-									    <td><</th>
+									    <td><</td>
 									    <td>lt</td>
-									    <td>oprLt</th>
+									    <td>oprLt</td>
 									    <td>Numbers and time</td>
 									</tr>
 									<tr>
-									    <td>>=</th>
+									    <td>>=</td>
 									    <td>gte</td>
-									    <td>oprGte</th>
+									    <td>oprGte</td>
 									    <td>Numbers and time</td>
 									</tr>
 									<tr>
-									    <td><=</th>
+									    <td><=</td>
 									    <td>lte</td>
-									    <td>oprLte</th>
+									    <td>oprLte</td>
 									    <td>Numbers and time</td>
 									</tr>
 									<tr>
-									    <td>~</th>
+									    <td>~</td>
 									    <td>reMatch</td>
-									    <td>oprReMatch</th>
+									    <td>oprReMatch</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td>~*</th>
+									    <td>~*</td>
 									    <td>reIMatch</td>
-									    <td>oprReIMatch</th>
+									    <td>oprReIMatch</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td>!~</th>
+									    <td>!~</td>
 									    <td>reNotMatch</td>
-									    <td>oprNotReMatch</th>
+									    <td>oprNotReMatch</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td>!~*</th>
+									    <td>!~*</td>
 									    <td>reNotIMatch</td>
-									    <td>oprNotIReMatch</th>
+									    <td>oprNotIReMatch</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>like</td>
-									    <td>oprLike</th>
+									    <td>oprLike</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>startsWith</td>
-									    <td>oprStartsWith</th>
+									    <td>oprStartsWith</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>endsWith</td>
-									    <td>oprEndsWith</th>
+									    <td>oprEndsWith</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>similarTo</td>
-									    <td>oprSimilarTo</th>
+									    <td>oprSimilarTo</td>
 									    <td>String</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>isNull</td>
-									    <td></th>
+									    <td></td>
 									    <td>Any</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>isNotNull</td>
-									    <td></th>
+									    <td></td>
 									    <td>Any</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>in</td>
-									    <td></th>
+									    <td></td>
 									    <td>Any</td>
 									</tr>
 									<tr>
-									    <td></th>
+									    <td></td>
 									    <td>notIn</td>
-									    <td></th>
+									    <td></td>
 									    <td>Any</td>
 									</tr>
                   <tr>
-                      <td></th>
+                      <td></td>
                       <td>has</td>
-                      <td>oprHas</th>
+                      <td>oprHas</td>
                       <td>Array</td>
                   </tr>
                   <tr>
-                      <td></th>
+                      <td></td>
                       <td>hasNot</td>
-                      <td>oprHasNot</th>
+                      <td>oprHasNot</td>
                       <td>Array</td>
                   </tr>
                   <tr>
-                      <td></th>
+                      <td></td>
                       <td>overlap</td>
-                      <td>oprOverlap</th>
+                      <td>oprOverlap</td>
                       <td>Array</td>
                   </tr>
                   <tr>
-                      <td></th>
+                      <td></td>
                       <td>overlapNot</td>
-                      <td>oprOverlapNot</th>
+                      <td>oprOverlapNot</td>
                       <td>Array</td>
                   </tr>
                   <tr>
-                      <td>@></th>
+                      <td>@></td>
                       <td>contains</td>
-                      <td>oprContains</th>
+                      <td>oprContains</td>
                       <td>Jsonb</td>
                   </tr>
                   <tr>
-                      <td><@</th>
+                      <td><@</td>
                       <td>containedBy</td>
-                      <td>oprContainedBy</th>
+                      <td>oprContainedBy</td>
                       <td>Jsonb</td>
                   </tr>
                   <tr>
-                      <td>?</th>
+                      <td>?</td>
                       <td>exists</td>
-                      <td>oprExists</th>
+                      <td>oprExists</td>
                       <td>Jsonb</td>
                   </tr>
                   <tr>
-                      <td>?|</th>
+                      <td>?|</td>
                       <td>existsAny</td>
-                      <td>oprExistsAny</th>
+                      <td>oprExistsAny</td>
                       <td>Jsonb</td>
                   </tr>
                   <tr>
-                      <td>?&</th>
+                      <td>?&</td>
                       <td>existsAll</td>
-                      <td>oprExistsAll</th>
+                      <td>oprExistsAll</td>
                       <td>Jsonb</td>
                   </tr>
 								</tbody>
