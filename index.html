@@ -226,11 +226,11 @@
             <p>Attention! There are some changes to the API in this version. They affect INSERT, UPDATE and DELETE.</p>
 						<h5>For ZIO 1</h5>
             <div class="docs-code-block">
-							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.4-RC2"</code></pre>
+							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.4-RC3"</code></pre>
 						</div>
             <h5 style="margin-top: 10px;">For ZIO 2</h5>
             <div class="docs-code-block">
-              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.4-RC2"</code></pre>
+              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.4-RC3"</code></pre>
             </div>
             <p> </p>
             <p>If you need an older version of this documentation:</p>
@@ -614,6 +614,7 @@ object PlayJsonLoader {
     case v: Jsonb       => Json.parse(v.value)
     case v: Option[_]   => v.map(toJsValue).getOrElse(JsNull)
     case v: Seq[_]      => JsArray(v.map(toJsValue))
+    case v: JsValue     => v
     case _              => throw new Exception("Cannot convert to JsValue")
   }
 
@@ -711,7 +712,7 @@ object PlayJsonLoader {
 							<p>Use Posgres's coalesce function to return a default value in case of null</p>
 							<pre class="rounded">
 								<code class="language-scala hljs">import kuzminki.fn._
-cols1(t => Fn.coalesce(t.city, "No city"))</code>
+cols1(t => t.city.default("No city"))</code>
 							</pre>
             </div>
           </section>
@@ -1618,6 +1619,12 @@ sql
   .where(_.id === 3)
   .runHead // Jsonb({"name" : "Rick", "age" : 31})
 
+sql
+  .select(customer)
+  .cols1(_.data - "residents")
+  .where(_.id === 3)
+  .runHead
+
 // update
 
 sql
@@ -1629,14 +1636,14 @@ sql
   
 sql
   .update(customer)
-  .set(_.data - "address")
+  .set(_.data -= "address")
   .where(_.id === 3)
   .run
 
 
 sql
   .update(customer)
-  .set(_.data -& Seq("residents", "age"))
+  .set(_.data #-= Seq("residents", "age"))
   .where(_.id === 3)
   .run</code>
               </pre>
@@ -1665,7 +1672,7 @@ for {
 
   _ <- sql
     .update(nums)
-    .set(_.numbers.append(4)) // append, prepend, remove
+    .set(_.numbers += 4) // append, prepend, remove
     .where(_.id === id)
     .run
 
@@ -2173,19 +2180,19 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
                       <td>Numbers</td>
 									</tr>
                   <tr>
-                      <td></td>
+                      <td>:=</td>
                       <td>prepend</td>
                       <td>modPrepend</td>
                       <td>Array</td>
                   </tr>
                   <tr>
-                      <td></td>
+                      <td>+=</td>
                       <td>append</td>
                       <td>modAppend</td>
                       <td>Array</td>
                   </tr>
                   <tr>
-                      <td></td>
+                      <td>-=</td>
                       <td>remove</td>
                       <td>modRemove</td>
                       <td>Array</td>
@@ -2197,19 +2204,19 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
                       <td>Jsonb</td>
                   </tr>
                   <tr>
-                      <td>-</td>
+                      <td>-=</td>
                       <td>delKey</td>
                       <td>modDelKey</td>
                       <td>Jsonb</td>
                   </tr>
                   <tr>
-                      <td>-</td>
+                      <td>-=</td>
                       <td>delKey</td>
                       <td>modDelIndex</td>
                       <td>Jsonb</td>
                   </tr>
                   <tr>
-                      <td>-&</td>
+                      <td>#-=</td>
                       <td>delPath</td>
                       <td>modDelPath</td>
                       <td>Jsonb</td>
