@@ -216,13 +216,24 @@
 		    <div class="container">
 			    <article class="docs-article" id="section-1">
 				    <header class="docs-header">
-					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2022-08-06</span></h1>
+					    <h1 class="docs-heading">Introduction <span class="docs-time">Last updated: 2022-12-29</span></h1>
 					    <section class="docs-intro">
-						  	<p>Kuzminki is query builder and access library for PostgreSQL written in Scala.</p>
+						  	<p>Kuzminki is feature-rich query builder and access library for PostgreSQL written in Scala.</p>
 
-								<p>Kuzminki is written for those who like SQL. Queries are written with the same logic you write SQL statements. As a result the code is easy to read and memorise while the resulting SQL statement is predictable.</p>
+								<p>It is available with integration for <a href="https://github.com/karimagnusson/kuzminki-zio" target="_blank">ZIO 1</a> and <a href="https://github.com/karimagnusson/kuzminki-zio-2" target="_blank">ZIO 2</a> and a <a href="https://github.com/karimagnusson/kuzminki-ec" target="_blank">version</a> that relies only on Scala ExecutionContext.The API follows the logic of SQL statements. As a result the code is easy to read and memorise while the resulting SQL statement is predictable. It is as type-checked as possible and does not use any wild-card types resulting in confusing errors.</p>
 
-                <p>Kuzminki is available for ZIO, ZIO 2</p>
+                <p>Features:</p>
+                <ul>
+                  <li>Cached queries, meaning that the SQL string is built only once, for improved performance and re-usability.</li>
+                  <li>Streaming from and to the database</li>
+                  <li>Extensive support for JSONB fields</li>
+                  <li>Support for Array fields</li>
+                  <li>Rich support for timestamp fields</li>
+                  <li>Support for sub-queries</li>
+                  <li>Support for transactions</li>
+                </ul>
+
+                <h5>Kuzminki projects on GitHub</h5>
 
                 <p>On Github for ZIO 1<a href="https://github.com/karimagnusson/kuzminki-zio" target="_blank">
                   https://github.com/karimagnusson/kuzminki-zio
@@ -230,6 +241,10 @@
 
                 <p>On Github for ZIO 2<a href="https://github.com/karimagnusson/kuzminki-zio-2" target="_blank">
                   https://github.com/karimagnusson/kuzminki-zio-2
+                </a></p>
+
+                <p>On Github for EC<a href="https://github.com/karimagnusson/kuzminki-ec" target="_blank">
+                  https://github.com/karimagnusson/kuzminki-ec
                 </a></p>
 						</section>
 					</header>
@@ -246,6 +261,11 @@
             <div class="docs-code-block">
               <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.4-RC4"</code></pre>
             </div>
+            <h5 style="margin-top: 10px;">For EC</h5>
+            <div class="docs-code-block">
+              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-ec" % "0.9.4-RC4"</code></pre>
+            </div>
+
             <p> </p>
             <p>If you need an older version of this documentation:</p>
             <div>
