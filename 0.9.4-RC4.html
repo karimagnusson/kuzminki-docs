@@ -275,9 +275,6 @@
             <p> </p>
             <p>If you need an older version of this documentation:</p>
             <div>
-              <a href="0.9.4-RC4.html">0.9.4-RC4</a>
-            </div>
-            <div>
               <a href="0.9.4-RC3.html">0.9.4-RC3</a>
             </div>
             <div>
@@ -2005,39 +2002,19 @@ sql
             <p>Create your own function classes.</p>
             <div class="docs-code-block">
               <pre class="rounded">
-                <code class="language-scala hljs">import kuzminki.fn.StringFn
+                <code class="language-scala hljs">import kuzminki.fn.types._
 
-case class FullName(
-  title: String,
-  first: TypeCol[String],
-  second: TypeCol[String]
-) extends StringFn {
-  val name = "full_name"
-  val template = s"concat_ws(' ', '$title', %s, %s)"
-  val cols = Vector(first, second)
+case class Length(col: TypeCol[String]) extends IntNoArgsFn {
+  val template = "length(%s)"
 }
 
 sql
-  .select(user)
-  .cols2(t => (
-    t.id,
-    FullName("Mr", t.firstName, t.lastName)
+  .select(profile)
+  .cols1(t => (
+    Length(t.firstName)
   ))
-  .where(_.id === 10)
-  .runHead
-
-// If you need to have the driver fill in arguments:
-
-case class FullNameParam(
-  title: String,
-  first: TypeCol[String],
-  second: TypeCol[String]
-) extends StringParamsFn {
-  val name = "full_name"
-  val template = s"concat_ws(' ', ?, %s, %s)"
-  val cols = Vector(first, second)
-  val params = Vector(title)
-}</code>
+  .all
+  .run</code>
               </pre>
             </div>
 
