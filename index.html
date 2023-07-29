@@ -918,15 +918,16 @@ stm.run</code>
   .cols1(_.username)
   .all
   .pickWhere(t = (
-    t.age.use > Age,
+    t.age.use > Arg,
     t.email.use.in(
       sql
         .select(newsletter)
         .cols1(_.email)
-        .pickWhere1(_.firstName.use === Arg)
+        .all
+        .pickWhere1(_.isActive.use === Arg)
     )
   ))
-  .run
+  .cache
 
 stm.run(25, true)</code>
               </pre>
