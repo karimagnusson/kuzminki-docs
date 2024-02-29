@@ -117,8 +117,7 @@
 				    
             <li class="nav-item"><a class="nav-link scrollto" href="#item-2-1">Config</a></li>
 				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-2">Layer</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-3">Custom connection</a></li>
-				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-4">Split connection</a></li>
+				    <li class="nav-item"><a class="nav-link scrollto" href="#item-2-3">Split connection</a></li>
 				    
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-3"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Model</a></li>
 				    
@@ -145,8 +144,7 @@
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Joins</a></li>
 				    
             <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Join</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Extended Join</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-5-3">Join types</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-5-2">Join types</a></li>
 				    
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-6"><span class="theme-icon-holder me-2"><i class="fas fa-arrow-down"></i></span>Insert</a></li>
 				    
@@ -276,19 +274,19 @@
 						<h2 class="section-heading">Installation</h2>
 						<h5>For ZIO 1</h5>
             <div class="docs-code-block">
-							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.5-RC2"</code></pre>
+							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.5-RC4"</code></pre>
 						</div>
             <h5 style="margin-top: 10px;">For ZIO 2</h5>
             <div class="docs-code-block">
-              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.5-RC2"</code></pre>
+              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.5-RC4"</code></pre>
             </div>
             <h5 style="margin-top: 10px;">For EC</h5>
             <div class="docs-code-block">
-              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-ec" % "0.9.5-RC2"</code></pre>
+              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-ec" % "0.9.5-RC4"</code></pre>
             </div>
 
             <p> </p>
-            <p>If you need an older version of this documentation:</p>
+            <p>This documentation is for version 0.9.5-RC4. If you need an older version of this documentation:</p>
             <div>
               <a href="0.9.4-RC5.html">0.9.4</a>
             </div>
@@ -377,6 +375,11 @@ stm.run: List[T]
 stm.runHead: T
 stm.runHeadOpt: Option[T]
 
+// row as type (cecked by the compiler)
+stm.runType[MyType]: List[MyType]
+stm.runHeadType[MyType]: MyType
+stm.runHeadOptType[MyType]: Option[MyType]
+
 // modify row
 implicit val toMyType: SomeRow => MyType = row => //...
 stm.runAs[MyType]: List[MyType]
@@ -405,7 +408,8 @@ stm.runNum: Int</code>
 							<pre class="rounded">
 								<code class="language-scala hljs">val dbConfig = DbConfig
   .forDb("{DB-NAME}")
-  .withPoolSize(10)    // default = 10
+  .withMaxPoolSize(10) // default = 10
+  .withMinPoolSize(4)  // default = 4
   .withHost("{HOST}")  // default = localhost
   .withPort("{PORT}")  // default = 5432
   .withUser("{USER}}")
@@ -443,29 +447,15 @@ stm.runNum: Int</code>
           </section>
 
           <section class="docs-section" id="item-2-3">
-          	<h2 class="section-heading">Custom connection</h2>
-            <div class="docs-code-block">
-							<pre class="rounded">
-								<code class="language-scala hljs">for { 
-  db <- Kuzminki.create(dbConfig)
-  users <- db.query {
-    sql.select(user).cols1(_.username.all.orderBy(_.id.asc)
-  }
-} yield users</code>
-            	</pre>
-            </div>
-          </section>
-
-          <section class="docs-section" id="item-2-4">
           	<h2 class="section-heading">Split connection</h2>
           	<p>If you wish to have two connection pools, one for SELECT and another for INSERT, UPDATE, DELETE, you can use <code>layerSplit</code>. To create an instance rather than a Layer, use <code>createSplit</code>.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">// for .query .queryHead .queryHeadOpt
-val getConfig = DbConfig.forDb("company").withPoolSize(5)
+val getConfig = DbConfig.forDb("company")
 
 // for .exec .execNum
-val setConfig = DbConfig.forDb("company").withPoolSize(5)
+val setConfig = DbConfig.forDb("company")
 
 val dbLayer = Kuzminki.layerSplit(getConfig, setConfig)</code>
             	</pre>
@@ -525,7 +515,7 @@ Model.register[User]</code>
 
           <section class="docs-section" id="item-3-3">
           	<h2 class="section-heading">Create a model instance</h2>
-          	<p><code>Model.register[User]</code> creates an instance of the model for later use and makes sure there is only one instance of the model. <code>Model.register[User]</code> gets an existing instance of the model. If it does not exist, it is created.</p>
+          	<p><code>Model.register[User]</code> creates an instance of the model for later use and makes sure there is only one instance of the model. <code>Model.get[User]</code> gets an existing instance of the model. If it does not exist, it is created.</p>
             <div class="docs-code-block">
 							<pre class="rounded">
 								<code class="language-scala hljs">Model.register[User]
@@ -584,23 +574,18 @@ LIMIT 10</code>
           <h2 class="section-heading">Row as case class</h2>
           <div class="docs-code-block">
             <pre class="rounded">
-              <code class="language-scala hljs">case class ProductItem(id: Int, name: String, price: Float)
-
-class Product extends Model("product") {
-  val id = column[Int]("id")
-  val name = column[String]("name")
-  val price = column[Float]("price")
-  val item = read[ProductItem](id, name, price)
-}
-
-val product = Model.get[Product]
+              <code class="language-scala hljs">case class SimpleUser(id: Int, username: String, email: String)
 
 sql
-  .select(product)
-  .colsType(_.item)
-  .where(_.price < 100.0)
-  .run
-  // returns List[ProductItem]</code>
+  .select(user)
+  .cols3(t => (
+    t.id,
+    t.username,
+    t.email
+  ))
+  .where(_.age < 25)
+  .runType[SimpleUser]
+  // returns List[SimpleUser]</code>
               </pre>
             </div>
           </section>
@@ -1116,58 +1101,6 @@ LIMIT 10</code>
           </section>
 
           <section class="docs-section" id="item-5-2">
-            <h2 class="section-heading">Join result types</h2>
-            <p>You can have a join query return a case class.</p>
-            <div class="docs-code-block">
-            <pre class="rounded">
-              <code class="language-scala hljs">case class UserSpending(userId: Int, username: String, spending: Int)
-
-class UserCustomer extends JoinRead[User, Customer] {
-  val userSpending = read[UserSpending](a.id, a.username, b.spending)
-}
-
-val userCustomer = new UserCustomer
-implicit val userCustomerConv = userCustomer.convert
-
-sql
-  .select(userCustomer)
-  .colsType(_.userSpending)
-  .joinOn(_.id, _.userId)
-  .where(_.a.age > 25)
-  .orderBy(_.b.spending.desc)
-  .limit(10)
-  .run
-  // returns List[UserCustomer]</code>
-              </pre>
-              <p>You can also define results as tuples or a Vector</p>
-              <pre class="rounded">
-                <code class="language-pgsql hljs">class UserCustomer extends JoinRead[User, Customer] {
-  val userSpending = read[UserSpending](a.id, a.username, b.spending)
-  // colsType(_.userSpending)
-
-  val userSpendingTuple = (a.id, a.username, b.spending)
-  // cols3(_.userSpendingTuple)
-
-  val userSpendingVector = Vector(a.id, a.username, b.spending)
-  // colsVector(_.userSpendingVector)
-}</code>
-              </pre>
-              <pre class="rounded">
-                <code class="language-pgsql hljs">SELECT
-  "a"."id",
-  "a"."username",
-  "b"."spending"
-FROM "user_profile" "a"
-INNER JOIN "customer" "b"
-ON "a"."id" = "b"."user_id"
-WHERE "a"."age" > 25
-ORDER BY "b"."spending" DESC
-LIMIT 10</code>
-              </pre>
-            </div>
-          </section>
-
-          <section class="docs-section" id="item-5-3">
 					<h2 class="section-heading">Join types</h2>
 					<p>The following joins are available. Refer to the section <a href="#item-9-1">Null values</a> to avoid problems that may come up with joins.
 					 <div class="docs-code-block">
@@ -1252,30 +1185,27 @@ stm.run(("bob", "bob@mail.com"))</code>
           <h2 class="section-heading">Insert case class</h2>
           <div class="docs-code-block">
             <pre class="rounded">
-              <code class="language-scala hljs">case class AddProduct(name: String, price: Float)
+              <code class="language-scala hljs">case class User(name: String, email: String)
 
-class Product extends Model("product") {
-  val id = column[Int]("id")
-  val name = column[String]("name")
-  val price = column[Float]("price")
-  val add = write[AddProduct](name, price)
-}
-
-val product = Model.get[Product]
-
-sql
-  .insert(product)
-  .colsType(_.add)
-  .values(AddProduct("Banana", 12.5))
+val stm = sql
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
+  .valuesType(User("Bob", "bob@mail.com"))
   .run
 
 // cache
 val stm = sql
-  .insert(product)
-  .colsType(_.add)
+  .insert(user)
+  .cols2(t => (
+    t.username,
+    t.email
+  ))
   .cache
 
-stm.run(AddProduct("Banana", 12.5))
+stm.run(User("Bob", "bob@mail.com"))
 </code>
               </pre>
               <pre class="rounded">
@@ -1748,7 +1678,7 @@ WHERE "country" = 'US'</code>
           
           <section class="docs-section" id="item-11-1">
             <h2 class="section-heading">Stream from the database</h2>
-            <p>Streaming is done in batches. By default a batch of 100. For a larger batch use .streamBatch(1000)</p>
+            <p>Streaming is done in batches. By default a batch of 100. For a larger batch use .stream(1000)</p>
             <div class="docs-code-block">
               <pre class="rounded">
                 <code class="language-scala hljs">sql
@@ -2015,9 +1945,9 @@ for {
 .set(_.numbers.addDesc(jsonObj, "index"))
 
 // cache
-.set(_.numbers.addAsc(Arg))
+.pickSet1(_.numbers.addAsc(Arg))
 // to use a list as argument
-.set(_.numbers.addAsc(ArgSeq))</code>
+.pickSet1(_.numbers.addAsc(ArgSeq))</code>
               </pre>
             </div>
           </section>
@@ -2440,13 +2370,13 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
                       <td></td>
 									</tr>
 									<tr>
-									    <td>startsWith</td>
+									    <td>starts</td>
 									    <td>String</td>
                       <td>String</td>
                       <td></td>
 									</tr>
 									<tr>
-									    <td>endsWith</td>
+									    <td>ends</td>
 									    <td>String</td>
                       <td>String</td>
                       <td></td>
