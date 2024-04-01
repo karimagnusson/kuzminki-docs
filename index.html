@@ -274,19 +274,19 @@
 						<h2 class="section-heading">Installation</h2>
 						<h5>For ZIO 1</h5>
             <div class="docs-code-block">
-							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.5-RC4"</code></pre>
+							<pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio" % "0.9.5"</code></pre>
 						</div>
             <h5 style="margin-top: 10px;">For ZIO 2</h5>
             <div class="docs-code-block">
-              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.5-RC4"</code></pre>
+              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-zio-2" % "0.9.5"</code></pre>
             </div>
             <h5 style="margin-top: 10px;">For EC</h5>
             <div class="docs-code-block">
-              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-ec" % "0.9.5-RC4"</code></pre>
+              <pre class="rounded"><code class="hljs">libraryDependencies += "io.github.karimagnusson" % "kuzminki-ec" % "0.9.5"</code></pre>
             </div>
 
             <p> </p>
-            <p>This documentation is for version 0.9.5-RC4. If you need an older version of this documentation:</p>
+            <p>This documentation is for version 0.9.5. If you need an older version of this documentation:</p>
             <div>
               <a href="0.9.4-RC5.html">0.9.4</a>
             </div>
@@ -1206,7 +1206,7 @@ val stm = sql
   .cache
 
 stm.run(User("Bob", "bob@mail.com"))
-</code>
+// stm.runListType(List(User("Bob", "bob@mail.com"), ...))</code>
               </pre>
               <pre class="rounded">
                 <code class="language-pgsql hljs">INSERT INTO "product" ("name", "price") VALUES ('Banana', 12.5)</code>
@@ -1686,9 +1686,26 @@ WHERE "country" = 'US'</code>
   .cols3(_.all)
   .all
   .orderBy(_.id.asc)
-  .stream // .streamBatch(1000)
+  .stream // .stream(1000)
   .map(makeLine)
   .run(fileSink(Paths.get("clints.txt")))</code>
+              </pre>
+            </div>
+
+            <p>Stream type</p>
+            <div class="docs-code-block">
+              <pre class="rounded">
+                <code class="language-scala hljs">case class UserInfo(name: String, age: Int)
+
+sql
+  .select(oldUser)
+  .cols2(t => (
+    t.name,
+    t.age
+  ))
+  .all
+  .orderBy(_.id.asc)
+  .streamType[UserInfo]</code>
               </pre>
             </div>
           </section>
@@ -1713,6 +1730,34 @@ readFileIntoStream("clints.txt")
   .map(makeTupleFromLine)
   .transduce(insertStm.collect(100))
   .run(insertStm.asChunkSink)</code>
+              </pre>
+            </div>
+
+            <p>Stream type</p>
+            <div class="docs-code-block">
+              <pre class="rounded">
+                <code class="language-scala hljs">case class User(id: Int, name: String, age: Int)
+case class UserInfo(name: String, age: Int)
+
+sql
+  .select(oldUser)
+  .cols2(t => (
+    t.name,
+    t.age
+  ))
+  .all
+  .orderBy(_.id.asc)
+  .streamType[UserInfo] // .streamType[UserInfo](1000)
+  .run(
+    sql
+      .insert(user)
+      .cols2(t => (
+        t.name,
+        t.age
+      ))
+      .cache
+      .asTypeSink[UserInfo] // .asTypeChunkSink[UserInfo]
+  )</code>
               </pre>
             </div>
           </section>
@@ -2370,7 +2415,7 @@ db.exec(rsql"""INSERT INTO "user_profile" ("username", "email") VALUES ($usernam
                       <td></td>
 									</tr>
 									<tr>
-									    <td>starts</td>
+									    <td>begins</td>
 									    <td>String</td>
                       <td>String</td>
                       <td></td>
